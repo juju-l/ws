@@ -1,0 +1,11 @@
+package main
+
+import (
+	"net/http"
+	"github.com/gorilla/websocket"
+	"fmt"
+)
+
+func main() {
+  //
+}
