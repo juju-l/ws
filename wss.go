@@ -20,7 +20,7 @@ func main() {
         // wss := websocket.Upgrader{}
         con, _ := wss.Upgrade(c.Writer, c.Request, nil)
         defer con.Close()
-        cmd := exec.Command("sh", /*"-x",*/ "-c", "packer build -var version_kic=b725891a packer-kic.json;echo \\#", "2>&1")
+        cmd := exec.Command("sh", /*"-x",*/ "-c", "packer build -var version_kic=b725891a packer-kic.json;echo -n \\#", "2>&1")
         stdout,_ := cmd.StdoutPipe()
         soBuffer := bufio.NewReader(stdout)
         cmd.Stderr = os.Stderr
