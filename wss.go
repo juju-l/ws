@@ -22,11 +22,11 @@ func main() {
         defer con.Close()
         cmd := exec.Command("sh", /*"-x",*/ "-c", "packer build -var version_kic=b725891a packer-kic.json;echo -n \\#", "2>&1")
         stdout,_ := cmd.StdoutPipe()
-        soBuffer := bufio.NewReader(stdout)
+        bufReader := bufio.NewReader(stdout)
         cmd.Stderr = os.Stderr
         cmd.Start()
         for {
-          log,_,_ := soBuffer.ReadLine()
+          log,_,_ := bufReader.ReadLine()
           if string(log) == "#" {
             return
           }
