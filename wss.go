@@ -26,16 +26,12 @@ func main() {
         cmd.Stderr = os.Stderr
         cmd.Start()
         for {
-          log,_,_ := bufReader.ReadLine()
-          if string(log) == "#" {
-            return
-          }
-          con.WriteMessage(1, log)
+          log,_,_ := bufReader.ReadLine(); if string(log) == "#" { return }; con.WriteMessage(1, log)
         }
         cmd.Wait()
         fmt.Println(".")
       } else {
-        c.HTML(200, "default.htm", nil)
+        c.HTML(200, "default.htm", nil) //
       }
     })
   ///
