@@ -1,53 +1,6 @@
 <html>
   <header>
-    <style><!--
-    body {
-      margin: 0 auto;
-      min-width: 960px;
-      background-color: #ffffff;
-      min-height: 578;
-      padding: 0
-    }
-    /*scroll-custom-webkit {
-      -webkit-scrollbar: ; -webkit-scrollbar-button: ; -webkit-scrollbar-thumb: ; -webkit-scrollbar-track: ; -webkit-scrollbar-track-piece: ; -webkit-scrollbar-corner: ; -webkit-resizer: ;
-    }*/
-    #consoleShow::-webkit-scrollbar-thumb {
-      display: none
-    }
-    .c-header {
-      height: calc(23% - 47px - 6px)
-    }
-    .c-nav {
-      height: 47px;
-      background-color: #cccccc;
-      margin: 3px auto
-    }
-    .c-main {
-      height: 60%
-    }
-    #consoleShow {
-      width: 918px;
-      font-size: 9px;
-      height: calc(100% - 14px);
-      line-height: 15px;
-      background-color: #000000;
-      padding: 7px 21px;
-      margin: 0 auto;
-      color: #ffffff;
-      overflow-y: auto
-    }
-    .c-fgx {
-      height: 7px;
-      background-color: #ccc;
-      margin: 3px auto
-    }
-    .c-footer {
-      height: calc(17% - 7px - 6px)
-    }
-    div {
-      width: 100%
-    }
-    --></style>
+    <title>test webSocket</title>
   </header>
   <body>
     <div
@@ -58,11 +11,63 @@
       class="c-nav"
       style="">
       </div>
-    <div class="c-main" style="">
+    <div
+      class="c-main"
+      style="">
       <pre id="consoleShow" class=""></pre>
+      <style><!--
+      body {
+        margin: 0 auto;
+        min-width: 960px;
+        background-color: #ffffff;
+        min-height: 578;
+        padding: 0
+      }
+      /*scroll-custom-webkit {
+        -webkit-scrollbar: ; -webkit-scrollbar-button: ; -webkit-scrollbar-thumb: ; -webkit-scrollbar-track: ; -webkit-scrollbar-track-piece: ; -webkit-scrollbar-corner: ; -webkit-resizer: ;
+      }*/
+      #consoleShow::-webkit-scrollbar-thumb {
+        display: none
+      }
+      .c-header {
+        height: calc(23% - 47px - 6px)
+      }
+      .c-nav {
+        height: 47px;
+        background-color: #cccccc;
+        margin: 3px auto
+      }
+      .c-main {
+        height: 60%
+      }
+      #consoleShow {
+        width: 918px;
+        font-size: 9px;
+        height: calc(100% - 14px);
+        line-height: 15px;
+        background-color: #000000;
+        padding: 7px 21px;
+        margin: 0 auto;
+        color: #ffffff;
+        overflow-y: auto
+      }
+      .c-fgx {
+        height: 7px;
+        background-color: #ccc;
+        margin: 3px auto
+      }
+      .c-footer {
+        height: calc(17% - 7px - 6px)
+      }
+      div {
+        width: 100%
+      }
+      --></style>
       <script>
         obj = document.getElementById("consoleShow")
+        ///
         wss = new WebSocket("ws://localhost:8080/fw"); wss.onmessage = function(e) { obj.textContent += e.data.match(/\n$/)!=null ? e.data : e.data+"\n"; obj.scrollTop = obj.scrollHeight; /*console.log(e)*/ }; ///console.log(wss.readyState)
+        ///
         ///obj.scrollTop = obj.scrollHeight
       </script>
     </div>
