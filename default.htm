@@ -66,7 +66,7 @@
       <script>
         obj = document.getElementById("consoleShow")
         ///
-        wss = new WebSocket("ws://localhost:8080/?id=tst"); wss.onmessage = function(e) { log = JSON.parse(e.data); obj.textContent += log["tst"].match(/\n$/)!=null ? log["tst"] : log["tst"]+"\n"; obj.scrollTop = obj.scrollHeight; /*console.log(e)*/ }; ///console.log(wss.readyState)
+        wss = new WebSocket("ws://localhost:8080/?id=tst"); wss.onmessage = function(e) { log = JSON.parse(e.data); obj.textContent += log["tst"].match(/\n$/)!=null ? log["tst"] : log["tst"]+"\n"; obj.scrollTop = obj.scrollHeight }; ///console.log(wss.readyState)
         ///
         ///obj.scrollTop = obj.scrollHeight
       </script>
