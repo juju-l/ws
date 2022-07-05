@@ -21,7 +21,7 @@ func main() {
   r.LoadHTMLGlob("./*.htm")
 	r.GET("/", func(c *gin.Context) {
       if c.Query("id") != "" {
-        con, _ := wss.Upgrade(c.Writer, c.Request, nil); defer con.Close(); bufReader := run("packer --help"); for { log,_,_ := bufReader.ReadLine(); if string(log) == "#" { break }; con.WriteMessage(1, []byte("{\""+c.Query("id")+"\":\""+string(log)+"\"}")) }; fmt.Println("shCmd exec finished...")
+        con, _ := wss.Upgrade(c.Writer, c.Request, nil); defer con.Close(); bufReader := run("packer --help"); for { log,_,_ := bufReader.ReadLine(); if string(log) == "#" { break }; con.WriteMessage(1, []byte("{\"consoleShow\":\""+string(log)+"\"}")) }; fmt.Println("shCmd exec finished...")
       } else {
         c.HTML(200, "default.htm", nil) //
       }
