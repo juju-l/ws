@@ -3,18 +3,26 @@ package main
 import (
 	"os"
 	"os/exec"
-    // "time"
+	"sync"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"bufio"
 	"fmt"
 )
 
-var wss = websocket.Upgrader{} //
+	var wss = websocket.Upgrader{}
 
 func run(shCmd string) *bufio.Reader {
     cmd := exec.Command("sh", /*"-x",*/ "-c", shCmd+";echo -n \\#", "2>&1"); stdout,_ := cmd.StdoutPipe(); bufReader := bufio.NewReader(stdout); cmd.Stderr = os.Stderr; go cmd.Run(); return bufReader //
 }
+
+var (
+	mux sync.Mutex
+	buflist map[string]*bufio.Reader
+	msgChannel = make(map[string]chan interface{})
+	clilist = make(map[string]*websocket.Conn)
+	sh *shCmd
+)
 
 func main() {
 	r := gin.Default()
@@ -28,6 +36,12 @@ func main() {
     })
   ///
 	r.Run(":8080")
+}
+
+type shCmd struct {
+  Ready *[]string
+  Sh *map[string][]string
+  Call *[]string
 }
 
 func init() {
