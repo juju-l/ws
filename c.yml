@@ -2,5 +2,5 @@
 ready:
 sh:
   consoleShow:
-    - "set -e;packer --help;echo -e \#"
+    - "sleep 71s;for k in {1..21}; do echo $k; done;echo -n '#'"
 call:
