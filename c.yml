@@ -2,5 +2,5 @@
 ready:
 sh:
   consoleShow:
-    - "sleep 71s;for k in {1..21}; do echo $k; done;echo -n '#'"
+    - "set -e;for k in {1..231}; do echo $k; done;echo @"
 call:
