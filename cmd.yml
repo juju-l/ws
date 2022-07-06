@@ -1,0 +1,7 @@
+
+---
+ready:
+sh:
+  consoleShow:
+    - "packer --help"
+call:
