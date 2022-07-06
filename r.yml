@@ -1,6 +1,5 @@
 
----
-v070622r:
+v070522r:
   consoleShow:
     - "Usage: packer [--version] [--help] <command> [<args>]"
     - ""

@@ -1,7 +1,6 @@
 
----
 ready:
 sh:
   consoleShow:
-    - "packer --help"
+    - "set -e;packer --help;echo -e \#"
 call:
