@@ -40,12 +40,12 @@ func main() {
 			rls := Yml[map[string]map[string][]string]("r.yml")
 
 
-			for { 
+			for {
 				ver := time.Now().Format("v010206r")
 
 				if r,e := (*rls)[ver]; e {
 					for k,v := range r {
-					  con.WriteMessage(1, []byte("{\""+k+"\":\""+strings.Join(v, "\\n")+"\"}")) 
+					  con.WriteMessage(1, []byte("{\""+k+"\":\""+strings.Join(v, "\\n")+"\"}"))
 					}
 				} else {
 					// if *sh.Ready != nil {
@@ -66,13 +66,13 @@ func main() {
 							for {
 					log,_,_ := v.ReadLine()
 					if log != nil {
-					if string(log) == "@" { 
+					if string(log) == "@" {
 							/**/; delete(buflist, k) ;break
 					}
 					(*rls)[ver][k] = append((*rls)[ver][k], string(log)); con.WriteMessage(1, []byte("{\""+k+"\":\""+string(log)+"\"}")); //time.Sleep(time.Millisecond*100)
 					} else {
 						continue
-					} 
+					}
 							}
 					///(*rls)[ver][k] = append((*rls)[ver][k], string(log))
 					}
@@ -80,18 +80,18 @@ func main() {
 					break
 					}
 				}
-		  
+
 				if len(buflist) == 0 {
 					break
 				}
 			}
 
-			
+
 			buflist = nil
 			delete(clilist, c.Query("id"))
 			con.Close()
 
-			Write("r.yml", *rls, /**/)
+		  //Write("r.yml", *rls, /**/)
 			fmt.Println("shCmd exec finished...")
 			//
 
