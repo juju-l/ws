@@ -39,11 +39,11 @@ func main() {
 
 			rls := Yml[map[string]map[string][]string]("r.yml")
 
-			cha := msgChannel[c.Query("id")]
-			if cha == nil {
-			/*var err error;*/ cha = make(chan /*interface{}*/[]byte); msgChannel[c.Query("id")] = cha
-			}
-			///defer 销毁
+			// cha := msgChannel[c.Query("id")]
+			// if cha == nil {
+			// /*var err error;*/ cha = make(chan /*interface{}*/[]byte); msgChannel[c.Query("id")] = cha
+			// }
+			// ///defer 销毁
 
 
 			for {
@@ -66,12 +66,12 @@ func main() {
 							for {
 					/*select {
 					  //
-					  case */msg, ok := <- cha/*:*/
-							err := con.WriteMessage(1, msg)
-							if err != nil {
-									if ok { go func() { /**/; cha <- msg } (); break } //offline
-							}
-							//
+					  case *//*msg, ok := <- cha*//*:*/
+							// err := con.WriteMessage(1, msg)
+							// if err != nil {
+							// 		if ok { go func() { /**/; cha <- msg } (); break } //offline
+							// }
+							// //
 							if v == nil {
 									break
 							}
@@ -85,9 +85,9 @@ func main() {
 									/*,*/ (*rls)[ver][k], string(log),
 								)
 							//
-							cha <- []byte("{\""+k+"\":\""+string(log)+"\"}")
+							// cha <- []byte("{\""+k+"\":\""+string(log)+"\"}")
 							//
-							///con.WriteMessage(1, []byte("{\""+k+"\":\""+string(log)+"\"}"))
+							con.WriteMessage(1, []byte("{\""+k+"\":\""+string(log)+"\"}"))
 							//
 							//time.Sleep(
 							//		time.Millisecond*100,
