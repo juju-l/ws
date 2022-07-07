@@ -2,7 +2,7 @@ package main
 
 import (
 	"os"
-	"gopkg.in/yaml.v3"
+	"gopkg.in/yaml.v2"
 	// "fmt"
 )
 
@@ -11,7 +11,7 @@ import (
  */
 func Write(file string, dat interface{}, /**/) {
   os.WriteFile(
-	  "r.yml", Must(yaml.Marshal(dat)).([]byte), 0600,
+	  "r.yml", append([]byte("\n"), Must(yaml.Marshal(dat)).([]byte)... /* , */), 0600,
     )
 }
 
