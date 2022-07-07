@@ -1,14 +1,14 @@
 package main
 
 import (
+	"os"
+	"os/exec"
 	"bufio"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-	"os"
-	"os/exec"
 	"sync"
-	"time"
 	"strings"
+	"time"
 	"fmt"
 )
 
