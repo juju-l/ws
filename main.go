@@ -64,7 +64,11 @@ func main() {
 					for k,v := range buflist {
 					(*rls)[ver] = make(map[string][]string)
 							for {
+					if v == nil   {
+						break
+					}
 					log,_,_ := v.ReadLine()
+					//
 					if log != nil {
 					if string(log) == "@" {
 							/**/; delete(buflist, k) ;break
