@@ -9,12 +9,12 @@ import (
 /*
  ***
  */
-func Yml[T any](ymlfile string) *T {
+func Yml[T any](ymlfile string) T {
 	var t T;ti := &t
 	yaml.Unmarshal(
 	    Must(ioutil.ReadFile(ymlfile)).([]byte), ti,
 	  )
-	return ti
+	return *ti
 }
 
 //
