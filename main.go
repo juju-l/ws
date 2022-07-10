@@ -68,23 +68,24 @@ func main() {
 						}
 						
 
-						///if r,e := rls[ver]; !e {
+						//if r,e := rls[ver]; !e {
 							
 							
 							
 								idx := 0
+								s := len(rls[ver])
 								
 							for {
 							
 							
-								//if len(bufReaderList) == 0 {
-								//	break
-								//}
 								for k, v := range rls[ver] {
-									//if bufReaderList[k] == nil {
-									//	continue
-									//}
-									con.WriteMessage(1, []byte("{\""+k+"\":\""+c.Query("id")+"--->"+string(v[idx])+"\"}"))
+									/*if len(v) < idx && bufReaderList[k] == nil {
+										s = s - 1;continue
+									}*/
+									if string(v[idx]) == "#" {
+										s = s - 1;continue
+									}
+ 									con.WriteMessage(1, []byte("{\""+k+"\":\""+c.Query("id")+"--->"+string(v[idx])+"\"}"))
 									time.Sleep(
 										time.Millisecond * 100,
 									)
@@ -92,21 +93,24 @@ func main() {
 								}
 								
 								
+								if s == 0 {
+									break
+								}
 								
 							}
 							
+						rwLock.Lock(); Write("r.yml", rls); rwLock.Unlock() // 写入结果到 yml 文件	
 							
 							
-							
-						///} else {
-							///for k,v := range r {
-								///con.WriteMessage(1, []byte("{\""+k+"\":\""+strings.Join(v, "\\n")+"\"}"))
-							///}
-						///}
+						/*} else {
+							for k,v := range r {
+								con.WriteMessage(1, []byte("{\""+k+"\":\""+strings.Join(v, "\\n")+"\"}"))
+							}
+						}*/
 						
 						//
 					} else {
-						c.HTML(200, "default.htm", nil)
+						c.HTML(200, "default.htm", gin.H { "tstmp":time.Now().Unix() })
 					}
 			})
 	r.Run(":8080")

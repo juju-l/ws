@@ -2,7 +2,7 @@ package main
 
 import (
 	"io/ioutil"
-	"gopkg.in/yaml.v3"
+	"gopkg.in/yaml.v2"
 	// "fmt"
 )
 
