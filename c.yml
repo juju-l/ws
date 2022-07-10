@@ -3,4 +3,6 @@ ready:
 sh:
   consoleShow:
     - "set -e;for k in {1..231}; do echo $k; done;echo \\#"
+  tst:
+    - "set -e;for k in {232..237}; do echo $k; done;echo \\#"
 call:

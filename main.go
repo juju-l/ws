@@ -47,19 +47,19 @@ func main() {
 								bufReaderList[k] = Run(strings.Join(v, ";"))
 							}
 							for k, v := range bufReaderList {
-								go func() {
+								//go func() {
 									for {
-										log, _, err := v.ReadLine()
+										log, err := v.ReadBytes('\n') 
 										if err != nil /*|| io.EOF == err*/ {
 											delete(bufReaderList, k)
 											// delete(wsConList, c.Query("id"))
 											break
 										}
 										kLog := rls[ver][k]
-										kLog = append(kLog, string(log))
+										kLog = append(kLog, strings.TrimRight(string(log), "\n"))
 										rls[ver][k] = kLog
 									}
-								} ()
+								//} ()
 							}
 							// for {
 								//
@@ -83,14 +83,15 @@ func main() {
 										s = s - 1;continue
 									}*/
 									if string(v[idx]) == "#" {
-										s = s - 1;continue
+										s = s - 1;delete(rls[ver],k);continue
 									}
  									con.WriteMessage(1, []byte("{\""+k+"\":\""+c.Query("id")+"--->"+string(v[idx])+"\"}"))
 									time.Sleep(
 										time.Millisecond * 100,
 									)
-									idx += 1
+									//idx += 1
 								}
+									idx += 1
 								
 								
 								if s == 0 {
@@ -98,8 +99,10 @@ func main() {
 								}
 								
 							}
-							
-						rwLock.Lock(); Write("r.yml", rls); rwLock.Unlock() // 写入结果到 yml 文件	
+							/*for _, v := range rls[ver] {
+								rls[ver] = v[:len(v)-1]
+							}*/
+						//rwLock.Lock(); Write("r.yml", rls); rwLock.Unlock() // 写入结果到 yml 文件	
 							
 							
 						/*} else {
