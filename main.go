@@ -18,6 +18,8 @@ var (
 	bufReaderList = make(map[string]*bufio.Reader)
 	wsConList = make(map[string]*websocket.Conn)
 	sh shCmd
+	rls = Yml[map[string]map[string][]string]("r.yml")
+	isExec = false
 )
 
 type tst struct {
@@ -33,47 +35,74 @@ func main() {
 						if con == nil {
 						/*var err error;*/ con, _ = wssObject.Upgrade(c.Writer, c.Request, nil); wsConList[c.Query("id")] = con
 						}
-						defer con.Close()
-
-						rls := Yml[map[string]map[string][]string]("r.yml")
-
+						defer delete(
+							wsConList, c.Query("id"),
+						)
+						
 						ver := time.Now().Format("v010206r")
 
-						if r,e := rls[ver]; !e {
-							for k,v := range sh.Sh {
-								rwLock.Lock(); bufReaderList[k] = Run(strings.Join(v, ";")); rwLock.Unlock()
-							}
+						if isExec == false {
 							rls[ver] = make(map[string][]string)
-							/////rwLock.Lock(); Write("r.yml", rls); rwLock.Unlock()
-							for{
-								if len(bufReaderList) == 0 {
-									break
-								}
+							for k,v := range sh.Sh {
+								bufReaderList[k] = Run(strings.Join(v, ";"))
+							}
 							for k, v := range bufReaderList {
-								//go func() {
-									//for {
+								go func() {
+									for {
 										log, _, err := v.ReadLine()
-										// reader := transform.NewReader(bytes.NewReader(log), simplifiedchinese.GBK.NewDecoder())
 										if err != nil /*|| io.EOF == err*/ {
-											delete(bufReaderList, k); delete(wsConList, c.Query("id")); break
+											delete(bufReaderList, k)
+											// delete(wsConList, c.Query("id"))
+											break
 										}
-										con.WriteMessage(1, []byte("{\""+k+"\":\""+c.Query("id")+"--->"+string(log)+"\"}"))
 										kLog := rls[ver][k]
 										kLog = append(kLog, string(log))
 										rls[ver][k] = kLog
-										/////rwLock.Lock(); Write("r.yml", rls); rwLock.Unlock()
-										time.Sleep(
-											time.Millisecond * 100,
-										)
-									//}
-								//} ()
+									}
+								} ()
 							}
-							}
-						} else {
-							for k,v := range r {
-								con.WriteMessage(1, []byte("{\""+k+"\":\""+strings.Join(v, "\\n")+"\"}"))
-							}
+							// for {
+								//
+							// }
+							isExec = !isExec
 						}
+						
+
+						///if r,e := rls[ver]; !e {
+							
+							
+							
+								idx := 0
+								
+							for {
+							
+							
+								//if len(bufReaderList) == 0 {
+								//	break
+								//}
+								for k, v := range rls[ver] {
+									//if bufReaderList[k] == nil {
+									//	continue
+									//}
+									con.WriteMessage(1, []byte("{\""+k+"\":\""+c.Query("id")+"--->"+string(v[idx])+"\"}"))
+									time.Sleep(
+										time.Millisecond * 100,
+									)
+									idx += 1
+								}
+								
+								
+								
+							}
+							
+							
+							
+							
+						///} else {
+							///for k,v := range r {
+								///con.WriteMessage(1, []byte("{\""+k+"\":\""+strings.Join(v, "\\n")+"\"}"))
+							///}
+						///}
 						
 						//
 					} else {
