@@ -61,9 +61,7 @@ func (ws *wsEngine) run (cfg *appConfig) *wsEngine {
                 continue
               }
             }
-            
             ws.rList[k] = append(ws.rList[k], v.rst[i])
-            time.Sleep(time.Millisecond * 1000)
             i++
           }
         }
