@@ -18,7 +18,8 @@ var (
 func main() {
 	r := gin.Default()
 	r.LoadHTMLGlob("./*.htm")
-	//rls := Yml[map[string]map[string][]string]("r.yml")
+	rls := *Yml[map[string]map[string][]string]("r.yml")
+	// isExec := false
 	r.GET("/", func(c *gin.Context) {
 		if c.Query("id") != "" {
 			con := wsConList[c.Query("id")]
@@ -28,7 +29,7 @@ func main() {
 			}
 			defer delete(wsConList, c.Query("id"))
 
-			//ver := time.Now().Format("v010206r")
+			ver := time.Now().Format("v010206r")
 
 			if cfg.Ready != nil {
 				newSh(strings.Join(*cfg.Ready, ";")).cmd.Wait()
@@ -55,7 +56,17 @@ func main() {
 								}
 							}
 							fmt.Printf("%v--->%s", i, v.rst[i])
+
+							if rls[ver] == nil {
+								rls[ver] = make(map[string][]string)
+							} else {
+								//fmt.Print(rls[ver][k])
+								rls[ver][k] = append(rls[ver][k], v.rst[i])
+								//fmt.Print(rls[ver][k])
+							}
+
 							con.WriteMessage(1, []byte("{\""+k+"\":\""+c.Query("id")+"--->"+v.rst[i]+"\"}"))
+
 							time.Sleep(time.Millisecond * 1000)
 							i++
 						}
@@ -64,6 +75,8 @@ func main() {
 			}
 			for {
 				if len(shCmdList) == 0 {
+					fmt.Print(rls[ver])
+					////////Write("r.yml", rls)
 					break
 				}
 			}
