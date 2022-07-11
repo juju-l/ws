@@ -1,130 +1,90 @@
 package main
 
 import (
-	"bufio"
-	// "bytes"
-	"github.com/gin-gonic/gin"
-	"github.com/gorilla/websocket"
-	// "golang.org/x/text/encoding/simplifiedchinese"
-	// "golang.org/x/text/transform"
-	"sync"
+	"fmt"
 	"strings"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
 )
 
 var (
-	rwLock sync.RWMutex
 	wssObject = websocket.Upgrader{}
-	bufReaderList = make(map[string]*bufio.Reader)
 	wsConList = make(map[string]*websocket.Conn)
-	sh shCmd
-	rls = Yml[map[string]map[string][]string]("r.yml")
-	isExec = false
+	cfg       *appConfig
 )
-
-type tst struct {
-	//
-}
 
 func main() {
 	r := gin.Default()
-			r.LoadHTMLGlob("./*.htm")
-			r.GET("/", func(c *gin.Context) {
-					if c.Query("id") != "" {
-						con := wsConList[c.Query("id")]
-						if con == nil {
-						/*var err error;*/ con, _ = wssObject.Upgrade(c.Writer, c.Request, nil); wsConList[c.Query("id")] = con
-						}
-						defer delete(
-							wsConList, c.Query("id"),
-						)
-						
-						ver := time.Now().Format("v010206r")
+	r.LoadHTMLGlob("./*.htm")
+	//rls := Yml[map[string]map[string][]string]("r.yml")
+	r.GET("/", func(c *gin.Context) {
+		if c.Query("id") != "" {
+			con := wsConList[c.Query("id")]
+			if con == nil {
+				/*var err error;*/ con, _ = wssObject.Upgrade(c.Writer, c.Request, nil)
+				wsConList[c.Query("id")] = con
+			}
+			defer delete(wsConList, c.Query("id"))
 
-						if isExec == false {
-							rls[ver] = make(map[string][]string)
-							for k,v := range sh.Sh {
-								bufReaderList[k] = Run(strings.Join(v, ";"))
-							}
-							for k, v := range bufReaderList {
-								//go func() {
-									for {
-										log, err := v.ReadBytes('\n') 
-										if err != nil /*|| io.EOF == err*/ {
-											delete(bufReaderList, k)
-											// delete(wsConList, c.Query("id"))
-											break
-										}
-										kLog := rls[ver][k]
-										kLog = append(kLog, strings.TrimRight(string(log), "\n"))
-										rls[ver][k] = kLog
-									}
-								//} ()
-							}
-							// for {
-								//
-							// }
-							isExec = !isExec
-						}
-						
+			//ver := time.Now().Format("v010206r")
 
-						//if r,e := rls[ver]; !e {
-							
-							
-							
-								idx := 0
-								s := len(rls[ver])
-								
-							for {
-							
-							
-								for k, v := range rls[ver] {
-									/*if len(v) < idx && bufReaderList[k] == nil {
-										s = s - 1;continue
-									}*/
-									if string(v[idx]) == "#" {
-										s = s - 1;delete(rls[ver],k);continue
-									}
- 									con.WriteMessage(1, []byte("{\""+k+"\":\""+c.Query("id")+"--->"+string(v[idx])+"\"}"))
-									time.Sleep(
-										time.Millisecond * 100,
-									)
-									//idx += 1
-								}
-									idx += 1
-								
-								
-								if s == 0 {
+			if cfg.Ready != nil {
+				newSh(strings.Join(*cfg.Ready, ";")).cmd.Wait()
+			}
+
+			shCmdList := make(map[string]*shCmd)
+			for k, v := range cfg.Sh {
+				shCmdList[k] = newSh(strings.Join(v, ";"))
+			}
+			//
+			for i, j := range shCmdList {
+				go func(k string, v *shCmd) {
+					i := 0
+					for {
+						if len(v.rst) > 0 {
+							fmt.Println(v)
+							if len(v.rst) == i {
+								if v.isComplete {
+									fmt.Println(shCmdList)
+									delete(shCmdList, k)
 									break
+								} else {
+									continue
 								}
-								
 							}
-							/*for _, v := range rls[ver] {
-								rls[ver] = v[:len(v)-1]
-							}*/
-						//rwLock.Lock(); Write("r.yml", rls); rwLock.Unlock() // 写入结果到 yml 文件	
-							
-							
-						/*} else {
-							for k,v := range r {
-								con.WriteMessage(1, []byte("{\""+k+"\":\""+strings.Join(v, "\\n")+"\"}"))
-							}
-						}*/
-						
-						//
-					} else {
-						c.HTML(200, "default.htm", gin.H { "tstmp":time.Now().Unix() })
+							fmt.Printf("%v--->%s", i, v.rst[i])
+							con.WriteMessage(1, []byte("{\""+k+"\":\""+c.Query("id")+"--->"+v.rst[i]+"\"}"))
+							time.Sleep(time.Millisecond * 1000)
+							i++
+						}
 					}
-			})
+				}(i, j)
+			}
+			for {
+				if len(shCmdList) == 0 {
+					break
+				}
+			}
+			//
+
+			if cfg.Call != nil {
+				newSh(strings.Join(*cfg.Call, ";")).cmd.Wait()
+			}
+		} else {
+			c.HTML(200, "default.htm", gin.H{"tstmp": time.Now().Unix()})
+		}
+	})
 	r.Run(":8080")
 }
 
-type shCmd struct {
+type appConfig struct {
 	Ready *[]string
-	Sh map[string][]string
-	Call *[]string
+	Sh    map[string][]string
+	Call  *[]string
 }
 
 func init() {
-	sh = Yml[shCmd]("c.yml")
+	cfg = Yml[appConfig]("c.yml")
 }
