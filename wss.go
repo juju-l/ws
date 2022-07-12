@@ -4,7 +4,8 @@ import (
 	//"fmt"
 	"net/http"
 	"strings"
-	"time"
+
+	//"time"
 
 	"github.com/gorilla/websocket"
 )
@@ -40,7 +41,7 @@ func (ws *wsEngine) sendMsg(id string) {
       if len(v)-1 - i < 0 { 
 				continue 
 			}
-      time.Sleep(time.Millisecond * 1000)
+      //time.Sleep(time.Millisecond * 1000)
       /*for _,con := range ws.wsConList { */ws.wsConList[id].WriteMessage(1, []byte("{\""+k+"\":\"--->"+v[i]+"\"}")) //}
       //i++
     }
