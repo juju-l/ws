@@ -2,14 +2,14 @@ package main
 
 import (
   "fmt"
-  "bufio";"os";"os/exec"
+  "bufio";/*"os";*/"os/exec"
   "time"
 )
 
 func newSh(s string) *shCmd {
   var sh *shCmd
-      sh = &shCmd{ cmd: exec.Command("sh", "+xe", "-c", s, "2>&1") }
-      sh.cmd.Stderr = os.Stderr; stdout, _ := sh.cmd.StdoutPipe(); //sh.cmd.Stdin = os.Stdin
+      sh = &shCmd{ cmd: exec.Command("sh", "-xe", "-c", s, "2>&1") }
+      /*sh.cmd.Stdin = os.Stdin;*/ stdout, _ := sh.cmd.StdoutPipe(); sh.cmd.Stderr = sh.cmd.Stdout
       sh.cmd.Start()
       time.Sleep(time.Millisecond * 100)
       b := bufio.NewReader(stdout)
