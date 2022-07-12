@@ -48,8 +48,8 @@ func (ws *wsEngine) run (cfg *appConfig) *wsEngine {
       ws.shList[k] = newSh(strings.Join(v, ";"))
       //
     }
-    for k, v := range ws.shList {
-      go func() {
+    for m, n := range ws.shList {
+      go func(k string, v shCmd) {
         i := 0;for {
           if len(v.rst) > 0 {
             if len(v.rst) == i {
@@ -65,7 +65,7 @@ func (ws *wsEngine) run (cfg *appConfig) *wsEngine {
             i++
           }
         }
-      } ()
+      } (m, *n)
     }
     /*for {
       if len(ws.shList) == 0 {
