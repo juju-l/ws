@@ -1,11 +1,12 @@
 package main
 
 import (
-  //"fmt"
-  "github.com/gorilla/websocket"
-  "net/http"
-  "strings"
-  "time"
+	//"fmt"
+	"net/http"
+	"strings"
+	"time"
+
+	"github.com/gorilla/websocket"
 )
 
 func newWs() *wsEngine {
@@ -18,17 +19,24 @@ func newWs() *wsEngine {
   return ws
 }
 
-func (ws *wsEngine) sendBroadcastMsg() {
+func (ws *wsEngine) sendMsg(id string) {
   i := 0;t := ws.rList;for {
     if len(t) == 0 {
       break
     }
     for k, v := range t {
-      //
-      if len(v)-1 - i < 0 { continue }
+      if len(ws.shList) == 0 { 
+				if len(v) == i {
+					delete(t, k);
+					//break
+				}
+			}
+      if len(v)-1 - i < 0 { 
+				continue 
+			}
       time.Sleep(time.Millisecond * 1000)
-      for _,con := range ws.wsConList { con.WriteMessage(1, []byte("{\""+k+"\":\"--->"+v[i]+"\"}")) }
-      i++
+      /*for _,con := range ws.wsConList { */ws.wsConList[id].WriteMessage(1, []byte("{\""+k+"\":\"--->"+v[i]+"\"}")) //}
+      //i++
     }
     /*if len(ws.shList) != 0 {
       continue
