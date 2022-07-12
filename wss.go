@@ -20,7 +20,13 @@ func newWs() *wsEngine {
 }
 
 func (ws *wsEngine) sendMsg(id string) {
-  i := 0;t := ws.rList;for {
+  i := 0;
+  //t := ws.rList;会同步删除
+  t := make(map[string][]string)
+  for k,v := range ws.rList {
+	  t[k] = v
+  }
+  for {
     if len(t) == 0 {
       break
     }
