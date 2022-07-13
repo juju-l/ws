@@ -67,7 +67,7 @@
       --></style>
       <script>
         var xterm = new Terminal()
-        xterm.open( document.getElementById('tty'/*consoleShow*/) )
+        xterm.open( document.getElementById("tty"/*"consoleShow"*/) )
         // pre = document.getElementsByTagName("pre")
         ///
         wss = new WebSocket("ws://"+self.location.host+"/?id={{.tstmp}}"); wss.onmessage = function(e) { log = JSON.parse(e.data); /*for (obj of pre) {*/ /*if (log[obj.id]==undefined) {continue};*//*obj.*/textContent /*+*/= log[/*obj.id*/"consoleShow"].match(/\n$/)!=null ? log[/*obj.id*/"consoleShow"] : log[/*obj.id*/"consoleShow"]+"\r\n";xterm.write(textContent);/* ; */console.log(log) ;/*}*/ /*obj.scrollTop = obj.scrollHeight*/ }; ///console.log(wss.readyState)
