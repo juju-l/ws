@@ -19,6 +19,8 @@ func main() {
       c.HTML(200, "default.htm", gin.H{"tstmp": time.Now().Unix()})
     }
   })
+  //r.GET("/favicon.ico"... //
+  ///
   r.Run(":8080")
 }
 

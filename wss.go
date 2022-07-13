@@ -21,17 +21,11 @@ func (ws *wsEngine) sendMsg(id string) {
       /*;*/ delete(ws.wsConList, id); break
     }
     for k, v := range ws.rList {
-        if ws.shList[k].isComplete && len(*v) == i {
-          s ++; continue; /*;*/
-        }
-        if len(*v)-1-i < 0 {
-          for { if len(*v)-1-i >= 0{ break } }
-        }
+        if ws.shList[k].isComplete && len(*v) == i { s ++; continue; /*;*/ }
+        if len(*v)-1-i < 0 { for { if len(*v)-1-i >= 0{ break } } }
         time.Sleep(time.Millisecond*100)
         err := ws.wsConList[id].WriteMessage(1, []byte("{\""+k+"\":\"--->"+(*v)[i]+"\"}"))
-        if err != nil {
-          fmt.Println(err); delete(ws.wsConList, id); return
-        }
+        if err != nil { fmt.Println(err); delete(ws.wsConList, id); return }
     }
     /**/
     i ++
