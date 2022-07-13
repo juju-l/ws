@@ -1,18 +1,17 @@
 package main
 
 import (
-  "time"
-
+	"runtime"
   "github.com/gin-gonic/gin"
+  "time"
 )
 
 var cfg *appConfig
 
 func main() {
-  //runtime.GOMAXPROCS(1)
   r := gin.Default()
   r.LoadHTMLGlob("./*.htm")
-  ws := newWs()
+      ws := newWs()
   r.GET("/", func(c *gin.Context) {
     if c.Query("id") != "" {
       ws.run(cfg).cliRegister(c.Query("id"), c.Writer, c.Request).sendMsg(c.Query("id"))
@@ -30,5 +29,7 @@ type appConfig struct {
 }
 
 func init() {
-  cfg = Yml[appConfig]("c.yml")
+  cfg = Yml[appConfig](
+      "c.yml",
+    )
 }
