@@ -5,26 +5,26 @@
     }
   ],
   "settings": {
-    "files.eol": "\n",
-    "[go]": { "editor.formatOnSave": false },
-    "editor.mouseWheelZoom": true
+      "files.eol": "\n",
+      "[go]": { "editor.formatOnSave": false },
+      "editor.mouseWheelZoom": true
   },
   "launch": {
     "version": "0.2.0",
     "": "https://code.visualstudio.com/docs/editor/variables-reference",
     "configurations": [
       {
-        "_": "",
-        "env": {},
-        "name": "_Wss_",
-        "type": "go",
-        "request": "launch",
-        "mode": "auto",
-        "program": "${workspaceRoot:}/",
-        "args": [
-          "--help"
-        ],
-        "cwd": ""
+          "_": "",
+          "env": {},
+          "name": "_Wss_",
+          "type": "go",
+          "request": "launch",
+          "mode": "auto",
+          "program": "${workspaceRoot:}/",
+          "args": [
+            "--help"
+          ],
+          "cwd": ""
       }
     ]
   },
@@ -32,8 +32,8 @@
     
   ],
   "tasks": {
-    "_": "",
-    "version": "2.0.0",
-    "tasks": []
+      "_": "",
+      "version": "2.0.0",
+      "tasks": []
   }
 }
