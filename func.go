@@ -1,24 +1,20 @@
 package main
 
-import (
-  "bufio"
-  "os"
-  "os/exec"
-)
+// import (
+//   "os"
+//   "gopkg.in/yaml.v3"
+//   // "fmt"
+// )
 
 /*
  ***
  */
-func Run(shCmd string) *bufio.Reader {
-  var b *bufio.Reader
-  c := exec.Command("sh", "+xe", "-c", shCmd, "2>&1")
-  c.Stderr = os.Stderr; stdout, _ := c.StdoutPipe(); //c.Stdin = os.Stdin;
-  e := c.Start()
-  if e != nil {
-    panic(e)
+func Must(src interface{}, err error, /**/) interface{} {
+  rst := src
+  if err != nil {
+    panic(err)
   }
-  b = bufio.NewReader(stdout)//一次性只读
-  return b
+  return rst
 }
 
 //
