@@ -32,23 +32,16 @@ func (ws *wsEngine) sendMsg(id string) {
 		}
 	}
 
-	fmt.Println(len(ws.rList))
-
 	for m, n := range ws.rList {
-		f := 0
 		k := m; v := *n
-		fmt.Printf(">>> %s---->%p-----%v\n",m,n,*n)
-		//go func(k string, v []string) {
+		//go func() {
 			i := 0
 			for {
-				//time.Sleep(time.Millisecond*100)
 				if ws.shList[k].isComplete && len(v) == i {
 					s++
 					break
 				}
 				if len(v)-1-i < 0 {
-					f++
-					fmt.Println(f)
 					continue
 				}
 				time.Sleep(time.Millisecond*100)
@@ -60,8 +53,7 @@ func (ws *wsEngine) sendMsg(id string) {
 				}
 				i++
 			}
-			//time.Sleep(time.Millisecond*100)
-		//}(m, *n)
+		//}()
 	}
 
 	for {
