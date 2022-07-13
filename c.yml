@@ -1,8 +1,0 @@
-
-ready:
-sh:
-  consoleShow:
-    - "cat t `#2>/dev/null`;sleep 10s;for k in {1..231}; do echo $k; done;sleep 3s;echo ok"
-call:
-#
-#
