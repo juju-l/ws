@@ -32,20 +32,20 @@ func (ws *wsEngine) sendMsg(id string) {
 		}
 	}
 
-	for m, n := range ws.rList {
-		k := m; v := *n
+	for k, v := range ws.rList {
+		//k := m; v := *n
 		//go func() {
 			i := 0
 			for {
-				if ws.shList[k].isComplete && len(v) == i {
+				if ws.shList[k].isComplete && len(*v) == i {
 					s++
 					break
 				}
-				if len(v)-1-i < 0 {
+				if len(*v)-1-i < 0 {
 					continue
 				}
 				time.Sleep(time.Millisecond*100)
-				err := ws.wsConList[id].WriteMessage(1, []byte("{\""+k+"\":\"--->"+v[i]+"\"}"))
+				err := ws.wsConList[id].WriteMessage(1, []byte("{\""+k+"\":\"--->"+(*v)[i]+"\"}"))
 				if err != nil {
 					fmt.Println(err)
 					delete(ws.wsConList, id)
