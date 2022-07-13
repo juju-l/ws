@@ -1,7 +1,6 @@
 package main
 
 import (
-	"runtime"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -10,13 +9,14 @@ import (
 var cfg *appConfig
 
 func main() {
-	runtime.GOMAXPROCS(1)
+	//runtime.GOMAXPROCS(1)
 	r := gin.Default()
 	r.LoadHTMLGlob("./*.htm")
 	ws := newWs()
 	r.GET("/", func(c *gin.Context) {
 		if c.Query("id") != "" {
-			ws.run(cfg).cliRegister(c.Query("id"), c.Writer, c.Request).sendMsg(c.Query("id"))
+			ws = ws.run(cfg).cliRegister(c.Query("id"), c.Writer, c.Request)
+			go ws.sendMsg(c.Query("id"))
 		} else {
 			c.HTML(200, "default.htm", gin.H{"tstmp": time.Now().Unix()})
 		}

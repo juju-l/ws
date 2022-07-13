@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"time"
 
 	//"time"
 
@@ -34,29 +35,39 @@ func (ws *wsEngine) sendMsg(id string) {
 	fmt.Println(len(ws.rList))
 
 	for m, n := range ws.rList {
-		fmt.Printf("%s---->%p-----%v",m,n,*n)
+		f := 0
 		k := m; v := *n
+		fmt.Printf(">>> %s---->%p-----%v\n",m,n,*n)
 		//go func(k string, v []string) {
-			fmt.Println("888------------------->")
-			fmt.Printf("%p", v)
-			fmt.Println(k)
 			i := 0
 			for {
+				//time.Sleep(time.Millisecond*100)
 				if ws.shList[k].isComplete && len(v) == i {
 					s++
 					break
 				}
 				if len(v)-1-i < 0 {
+					f++
+					fmt.Println(f)
 					continue
 				}
-				ws.wsConList[id].WriteMessage(1, []byte("{\""+k+"\":\"--->"+v[i]+"\"}"))
+				time.Sleep(time.Millisecond*100)
+				err := ws.wsConList[id].WriteMessage(1, []byte("{\""+k+"\":\"--->"+v[i]+"\"}"))
+				if err != nil {
+					fmt.Println(err)
+					delete(ws.wsConList, id)
+					return
+				}
 				i++
 			}
+			//time.Sleep(time.Millisecond*100)
 		//}(m, *n)
 	}
 
 	for {
 		if s == len(ws.rList) {
+			//
+			delete(ws.wsConList, id)
 			break
 		}
 	}
