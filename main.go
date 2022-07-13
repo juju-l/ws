@@ -1,6 +1,7 @@
 package main
 
 import (
+	"runtime"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -9,6 +10,7 @@ import (
 var cfg *appConfig
 
 func main() {
+	runtime.GOMAXPROCS(1)
 	r := gin.Default()
 	r.LoadHTMLGlob("./*.htm")
 	ws := newWs()
