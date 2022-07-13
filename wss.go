@@ -8,14 +8,10 @@ import (
   "time"
 )
 
-func newWs() *wsEngine {
-  var ws *wsEngine
-  ws = &wsEngine{
-    shList: make(map[string]*shCmd),
-    wsConList: make(map[string]*websocket.Conn),
-    rList: make(map[string]*[]string),
-  }
-  return ws
+type wsEngine struct {
+  shList map[string]*shCmd
+  wsConList map[string]*websocket.Conn
+  rList map[string]*[]string
 }
 
 func (ws *wsEngine) sendMsg(id string) {
@@ -29,11 +25,7 @@ func (ws *wsEngine) sendMsg(id string) {
           s ++; continue; /*;*/
         }
         if len(*v)-1-i < 0 {
-          for {
-            if len(*v)-1-i >= 0{
-              break
-            }
-          }
+          for { if len(*v)-1-i >= 0{ break } }
         }
         time.Sleep(time.Millisecond*100)
         err := ws.wsConList[id].WriteMessage(1, []byte("{\""+k+"\":\"--->"+(*v)[i]+"\"}"))
@@ -52,7 +44,7 @@ func (ws *wsEngine) run(cfg *appConfig) *wsEngine {
   //
   if len(ws.rList) == 0 {
     if cfg.Ready != nil {
-      /*err := */ newSh(strings.Join(*cfg.Ready, ";")).cmd.Wait()
+      /*err := */ newSh(strings.Join(*cfg.Ready, ";")).cmd.Wait() //
     }
     for k, v := range cfg.Sh {
       //
@@ -80,7 +72,7 @@ func (ws *wsEngine) run(cfg *appConfig) *wsEngine {
       //
     }
     if cfg.Call != nil {
-      /*err := */ newSh(strings.Join(*cfg.Call, ";")).cmd.Wait()
+      /*err := */ newSh(strings.Join(*cfg.Call, ";")).cmd.Wait() //
     }
   }
   return ws
@@ -96,10 +88,14 @@ func (ws *wsEngine) cliRegister(id string, w http.ResponseWriter, r *http.Reques
   return ws
 }
 
-type wsEngine struct {
-  shList map[string]*shCmd
-  wsConList map[string]*websocket.Conn
-  rList map[string]*[]string
+func newWs() *wsEngine {
+  var ws *wsEngine
+  ws = &wsEngine{
+    shList: make(map[string]*shCmd),
+    wsConList: make(map[string]*websocket.Conn),
+    rList: make(map[string]*[]string),
+  }
+  return ws
 }
 
 func init() {
