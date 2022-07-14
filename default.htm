@@ -18,7 +18,9 @@
     <div
       class="c-main"
       style="">
-      <!--<pre id="consoleShow" class=""></pre>--><div class="" id="tty"></div>
+      <div class="pre" id="t1"></div>
+      <div id="consoleShow" class="pre"></div>
+      <div class="pre" id="t2"></div>
       <style><!--
       body {
         margin: 0 auto;
@@ -68,17 +70,35 @@
       }
       --></style>
       <script type="module" _="">
-        let xterm = new Terminal()
-        xterm.open( document.getElementById("tty"/*"consoleShow"*/) )
-        // pre = document.getElementsByTagName("pre")
-        let wss = new WebSocket("ws://"+self.location.host+"/?id={{.tstmp}}"); wss.onmessage = function(e) { let log = JSON.parse(e.data); /*for (obj of pre) {*/ /*if (log[obj.id]==undefined) {continue};*//*obj.*/let textContent /*+*/= log[/*obj.id*/"consoleShow"].match(/\n$/)!=null ? log[/*obj.id*/"consoleShow"] : log[/*obj.id*/"consoleShow"]+"\r\n";xterm.write(textContent);/* ; *//*obj.scrollTop = obj.scrollHeight*/ ;/*}*/ console.log(log) }; ///console.log(wss.readyState)
-        ///obj.scrollTop = obj.scrollHeight
-        let fitAddon = new FitAddon.FitAddon()
-        xterm.loadAddon(fitAddon)
-        fitAddon.fit()
-        //let attachAddon = new AttachAddon.AttachAddon(wss);
-        //xterm.loadAddon(attachAddon);
+        let mapObject = {}
+        let pre = 
+              document.getElementsByClassName("pre")
+        for (let i=0;i < pre.length;i ++) {
+          let xterm = new Terminal()
+            let fitAddon = new FitAddon.FitAddon()
+              xterm.loadAddon(fitAddon)
+              // let attachAddon = new AttachAddon.AttachAddon(wss)
+              // xterm.loadAddon(attachAddon)
+              xterm.open( pre[i] )
+            mapObject[pre[i].id] = {
+              x: xterm,f: fitAddon//,a: attachAddon
+            }
+              fitAddon.fit()
+        }
+        /////
+
         ///
+        let wss = new WebSocket("ws://"+self.location.host+"/?id={{.tstmp}}"); wss.onmessage = function(e) { let log = eval('('+e.data+')'); for (let key in mapObject) { if (log[key]==undefined) {continue};let textContent = log[key].match(/\n$/)!=null ? log[key] : log[key]+"\r\n";mapObject[key].x.write(textContent);/* ; */pre[key].scrollTop=pre[key].scrollHeight }; console.log(log) }; ///console.log(wss.readyState)
+        ///
+
+        let reSize = function(key) {
+          mapObject[key].f.fit()
+        }
+        window.addEventListener('onresize', resize => {
+          for (let key in mapObject) {
+            mapObject[key].f.fit()
+          }
+        })
       </script>
     </div>
     <div
