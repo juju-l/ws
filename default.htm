@@ -1,8 +1,10 @@
 <html>
   <header>
-    <title>test webSocket</title>
+    <!--<tit>test webSocket</tit>-->
+    <script src="./x/xterm.js" type="module"></script>
+    <script src="./x/xterm-addon-attach.js" type="module"></script>
+    <script src="./x/xterm-addon-fit.js" type="module"></script>
     <link href="./x/xterm.css" rel="stylesheet" />
-    <script src="./x/xterm.js" _=""></script>
   </header>
   <body>
     <div
@@ -65,12 +67,12 @@
         width: 100%
       }
       --></style>
-      <script>
-        var xterm = new Terminal()
+      <script type="module" _="">
+        let xterm = new Terminal()
         xterm.open( document.getElementById("tty"/*"consoleShow"*/) )
         // pre = document.getElementsByTagName("pre")
         ///
-        wss = new WebSocket("ws://"+self.location.host+"/?id={{.tstmp}}"); wss.onmessage = function(e) { log = JSON.parse(e.data); /*for (obj of pre) {*/ /*if (log[obj.id]==undefined) {continue};*//*obj.*/textContent /*+*/= log[/*obj.id*/"consoleShow"].match(/\n$/)!=null ? log[/*obj.id*/"consoleShow"] : log[/*obj.id*/"consoleShow"]+"\r\n";xterm.write(textContent);/* ; */console.log(log) ;/*}*/ /*obj.scrollTop = obj.scrollHeight*/ }; ///console.log(wss.readyState)
+        let wss = new WebSocket("ws://"+self.location.host+"/?id={{.tstmp}}"); wss.onmessage = function(e) { let log = JSON.parse(e.data); /*for (obj of pre) {*/ /*if (log[obj.id]==undefined) {continue};*//*obj.*/let textContent /*+*/= log[/*obj.id*/"consoleShow"].match(/\n$/)!=null ? log[/*obj.id*/"consoleShow"] : log[/*obj.id*/"consoleShow"]+"\r\n";xterm.write(textContent);/* ; */console.log(log) ;/*}*/ /*obj.scrollTop = obj.scrollHeight*/ }; ///console.log(wss.readyState)
         ///
         ///obj.scrollTop = obj.scrollHeight
         /////
