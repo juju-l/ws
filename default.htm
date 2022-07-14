@@ -71,11 +71,13 @@
         let xterm = new Terminal()
         xterm.open( document.getElementById("tty"/*"consoleShow"*/) )
         // pre = document.getElementsByTagName("pre")
-        ///
         let wss = new WebSocket("ws://"+self.location.host+"/?id={{.tstmp}}"); wss.onmessage = function(e) { let log = JSON.parse(e.data); /*for (obj of pre) {*/ /*if (log[obj.id]==undefined) {continue};*//*obj.*/let textContent /*+*/= log[/*obj.id*/"consoleShow"].match(/\n$/)!=null ? log[/*obj.id*/"consoleShow"] : log[/*obj.id*/"consoleShow"]+"\r\n";xterm.write(textContent);/* ; */console.log(log) ;/*}*/ /*obj.scrollTop = obj.scrollHeight*/ }; ///console.log(wss.readyState)
-        ///
         ///obj.scrollTop = obj.scrollHeight
-        /////
+        let fitAddon = new FitAddon.FitAddon()
+        xterm.loadAddon(fitAddon)
+        fitAddon.fit()
+        //let attachAddon = new AttachAddon.AttachAddon(wss);
+        //xterm.loadAddon(attachAddon);
         ///
       </script>
     </div>
