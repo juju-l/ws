@@ -26,7 +26,7 @@ func (ws *wsEngine) sendMsg(id string) {
         }
         if len(*v)-1-i < 0 { for { if len(*v)-1-i >= 0{ break } } }
         time.Sleep(time.Millisecond*100)
-        err := ws.wsConList[id].WriteMessage(1, []byte("{\""+k+"\":\"--->"+(*v)[i]+"\"}")) //ws message send
+        err := ws.wsConList[id].WriteMessage(1, []byte("{\""+k+"\":\""+(*v)[i]+"\"}")) //ws message send
         if err != nil {
             fmt.Println(err); delete(ws.wsConList, id); return
         }
