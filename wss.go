@@ -26,7 +26,7 @@ func (ws *wsEngine) sendMsg(id string) {
       delete(ws.wsConList, id); if len(rls[ver]) == 0 { Write("r.yml", t) }; break
     }
     for k, v := range ws.rList {
-        if (len(t[ver]k) != 0||ws.shList[k].isComplete) && len(*v) == idx[k] {
+        if (len(t[ver][k]) != 0||ws.shList[k].isComplete) && len(*v) == idx[k] {
           /*;*/is := false;for i := 0; i < len(s); i ++ { if s[i] == k { is = true } };if ! is { /*;*/s = append(s, k);t[ver][k] = *v };continue
         }
         if len(*v)-1-idx[k] < 0 { /*;*//*#for { if len(*v)-1-i >= 0{ break } }*/;continue }
