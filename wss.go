@@ -93,7 +93,7 @@ func (ws *wsEngine) run(cfg *appConfig) *wsEngine {
       /*err := */ newSh(strings.Join(*cfg.Call, ";")).cmd.Wait() //
     }
   }
-        //
+      //
       } else {
   // if len(ws.rList) == 0 {
     for k, v := range rls[ver] {
