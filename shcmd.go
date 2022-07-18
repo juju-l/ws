@@ -14,7 +14,7 @@ func newSh(s string) *shCmd {
       // time.Sleep(time.Millisecond * 100)
       b := bufio.NewReader(stdout)
       go func() {
-      for { log, err := b.ReadBytes('\n'); if err != nil || io.EOF == err /**/ { /**/; sh.isComplete = true; break }; sh.rst = append(sh.rst, fmt.Sprintf("%d->%s<-%d", time.Now().Unix(), string(log[:len(log)-1]), time.Now().Unix())) }
+      for { log, err := b.ReadBytes('\n'); if err != nil || io.EOF == err /**/ { /**/; sh.isComplete = true; break }; sh.rst = append(sh.rst, fmt.Sprintf("%d->%s<-%d", time.Now().Unix(),string(log[:len(log)-1]),time.Now().Unix()) /**/) }
       } ()
       // fmt.Println(b)
   return sh

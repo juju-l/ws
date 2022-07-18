@@ -52,7 +52,7 @@ func (ws *wsEngine) run(cfg *appConfig) *wsEngine {
   ver := time.Now().Format("v010206r")
       rls := *Yml[map[string]map[string][]string]("r.yml")
   //     if rls == nil {
-  //       rls = make(map[string]map[string][]string) 
+  //       rls = make(map[string]map[string][]string)
   //     }
       if rls[ver] == nil {
   //       rls[ver] = make(map[string][]string)
