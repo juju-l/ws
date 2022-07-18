@@ -71,19 +71,12 @@
       --></style>
       <script type="module" _="">
         let mapObject = {}
-        let pre = 
-              document.getElementsByClassName("pre")
+        let pre = document.getElementsByClassName("pre") //
+        // let ...
         for (let i=0;i < pre.length;i ++) {
-          let xterm = new Terminal()
-            let fitAddon = new FitAddon.FitAddon()
-              xterm.loadAddon(fitAddon)
-              // let attachAddon = new AttachAddon.AttachAddon(wss)
-              // xterm.loadAddon(attachAddon)
-              xterm.open( pre[i] )
-            mapObject[pre[i].id] = {
-              x: xterm,f: fitAddon//,a: attachAddon
-            }
-              fitAddon.fit()
+          let xterm = new Terminal(), /*attachAddon = new AttachAddon.AttachAddon(wss),*/ fitAddon = new FitAddon.FitAddon()
+              xterm.loadAddon(fitAddon); /*xterm.loadAddon(attachAddon);*/ xterm.open( pre[i] )
+          /* ; */ mapObject[pre[i].id] = { x: xterm,f: fitAddon/*,a: attachAddon*/ }; fitAddon.fit()
         }
         /////
 
@@ -99,6 +92,7 @@
             mapObject[key].f.fit()
           }
         })
+        ///
       </script>
     </div>
     <div
