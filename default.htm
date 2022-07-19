@@ -23,76 +23,78 @@
       <!--<div class="pre" id="t2"></div>-->
       <style><!--
       body {
+        width: 100%;
         margin: 0 auto;
         min-width: 1002px;
         background-color: #ffffff;
+        height: 100%;
         min-height: 521px;
         padding: 0
       }
       /*scroll-custom-webkit {
         -webkit-scrollbar: ; -webkit-scrollbar-button: ; -webkit-scrollbar-thumb: ; -webkit-scrollbar-track: ; -webkit-scrollbar-track-piece: ; -webkit-scrollbar-corner: ; -webkit-resizer: ;
       }*/
-      #consoleShow::-webkit-scrollbar-thumb {
-        display: none
-      }
       .c-header {
         height: calc(23% - 47px - 6px)
       }
       .c-nav {
-        height: 47px;
+        margin: 3px auto;
         background-color: #cccccc;
-        margin: 3px auto
+        height: 47px
       }
       .c-main {
+        margin: 0px 47px;
+        width: calc(100% - 94px);
         height: 60%
       }
-      #consoleShow {
-        width: 956px;
-        font-size: 9px;
-        height: calc(100% - 14px);
-        line-height: 15px;
-        background-color: #000000;
-        padding: 7px 23px;
-        margin: 0 auto;
-        color: #ffffff;
-        overflow-y: auto
+      .pre {
+        margin: 0px 1px;
+        overflow: hidden;
+        height: 100%
       }
       .c-fgx {
-        height: 7px;
+        margin: 3px auto;
         background-color: #ccc;
-        margin: 3px auto
+        height: 7px
       }
       .c-footer {
         height: calc(17% - 7px - 6px)
       }
+      #consoleShow::-webkit-scrollbar-thumb {
+        display: none
+      }
       div {
-        width: 100%
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        padding: 0
       }
       --></style>
       <script type="module" _="">
         let mapObject = {}
         let pre = document.getElementsByClassName("pre") //
-        // let ...
+        let reSize = function(obj) {
+          mapObject[obj.id].f.fit()
+          //obj.style.height = mapObject[obj.id].x._core._renderService._renderer.dimensions.actualCellHeight*mapObject[obj.id].x.rows+"px"
+          //obj.style.marginTop = (document.getElementsByClassName("c-main")[0].clientHeight-obj.clientHeight)/2+"px"
+        }
         for (let i=0;i < pre.length;i ++) {
           let xterm = new Terminal(), /*attachAddon = new AttachAddon.AttachAddon(wss),*/ fitAddon = new FitAddon.FitAddon()
               xterm.loadAddon(fitAddon); /*xterm.loadAddon(attachAddon);*/ xterm.open( pre[i] )
-          /* ; */ mapObject[pre[i].id] = { x: xterm,f: fitAddon/*,a: attachAddon*/ }; fitAddon.fit()
+          /* ; */ mapObject[pre[i].id] = { x: xterm,f: fitAddon/*,a: attachAddon*/ }; reSize( pre[i] )
         }
-        /////
-
-        ///
-        let wss = new WebSocket("ws://"+self.location.host+"/?id={{.tstmp}}"); wss.onmessage = function(e) { let log = eval('('+e.data+')'); for (let key in mapObject) { if (log[key]==undefined) {continue};let textContent = log[key].match(/\n$/)!=null ? log[key] : log[key]+"\r\n";mapObject[key].x.write(textContent);/* ; */pre[key].scrollTop=pre[key].scrollHeight }; console.log(log) }; ///console.log(wss.readyState)
-        ///
-
-        let reSize = function(key) {
-          mapObject[key].f.fit()
-        }
-        window.addEventListener('onresize', resize => {
-          for (let key in mapObject) {
-            mapObject[key].f.fit()
+        let wss = new WebSocket("ws://"+self.location.host+"/?id={{.tstmp}}"); wss.onmessage = function(e) { let log = eval('('+e.data+')'); for (let key in mapObject) { if (log[key]==undefined) {continue};let textContent = log[key].match(/\n$/)!=null ? log[key] : log[key]+"\r\n";mapObject[key].x.write(textContent);/* ; *//*pre[key].scrollTop=pre[key].scrollHeight*/ }; /*console.log(log)*/ }; ///console.log(wss.readyState)
+        // for (let i=0;i < pre.length;i ++) {
+        //   $(".pre").eq(i).bind("resize", function(e) { console.log(e) })
+        // }
+        window.addEventListener('resize', () => { //onresize = (event) => {}
+          for (let i=0;i < pre.length;i ++) {
+            reSize( pre[i] )
           }
         })
-        ///
       </script>
     </div>
     <div
