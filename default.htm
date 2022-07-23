@@ -1,6 +1,8 @@
 <html>
   <header>
     <title>test webSocket</title>
+    <script src="https://code.jquery.com/jquery.js" type=""></script>
+    <link rel="stylesheet" type="text/css" href="" />
   </header>
   <body>
     <div
@@ -14,7 +16,7 @@
     <div
       class="c-main"
       style="">
-      <pre style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;border-color:#ff0000 #0000ff;background-color:#000;color:#ffff;white-space:pre-wrap;word-wrap:break-word" id="consoleShow"></pre>
+      <pre style="font-size:17px;line-height:132%;border-width:7px 21px 7px 21px;border-style:double solid double solid;border-color:#ff0000 #0000ff #ff0000 #0000ff;background-color:#000;color:#ffff;white-space:pre-wrap;word-wrap:break-word" id="consoleShow"></pre>
       <style><!--
       body {
         width: 100%;
@@ -70,7 +72,11 @@
       <script>
         pre = document.getElementsByTagName("pre")
         ///
-        wss = new WebSocket("ws://"+self.location.host+"/?id={{.tstmp}}"); wss.onmessage = function(e) { log = eval('('+e.data+')'); for (obj of pre) { if (log[obj.id]==undefined) {continue};obj.textContent += log[obj.id].match(/\n$/)!=null ? log[obj.id] : log[obj.id]+"\n";obj.scrollTop=obj.scrollHeight }; console.log(log) }; ///console.log(wss.readyState)
+        var wss = new WebSocket("ws://"+self.location.host+"/?id={{.tstmp}}")
+        wss.onmessage = function(e) {
+          log = eval('('+e.data+')'); for (obj of pre) { if (log[obj.id]==undefined) {continue};obj.textContent += log[obj.id].match(/\n$/)!=null ? log[obj.id] : log[obj.id]+"\n";obj.scrollTop=obj.scrollHeight }; console.log(log)
+        }
+        ///console.log(wss.readyState)
         ///
         ///obj.scrollTop = obj.scrollHeight
       </script>
