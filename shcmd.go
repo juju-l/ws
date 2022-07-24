@@ -10,7 +10,7 @@ func newSh(s string) *shCmd {
   var sh *shCmd
       sh = &shCmd{ cmd: exec.Command("sh", "+e", "-c", s, "2>&1") }
       /*sh.cmd.Stdin = os.Stdin;*/ stdout, _ := sh.cmd.StdoutPipe(); sh.cmd.Stderr = sh.cmd.Stdout
-      sh.cmd.Start()
+      /* sh.cmd.Start() */
       // time.Sleep(time.Millisecond * 100)
       b := bufio.NewReader(stdout)
       go func() {

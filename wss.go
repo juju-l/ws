@@ -27,13 +27,13 @@ func (ws *wsEngine) sendMsg(id string) {
     }
     for k, v := range ws.rList {
         if (len(t[ver][k]) != 0||ws.shList[k].isComplete) && len(*v) == idx[k] {
-          /*;*/is := false;for i := 0; i < len(s); i ++ { if s[i] == k { is = true } };if ! is { /*;*/s = append(s, k);t[ver][k] = *v };continue
+          /*;*/is := false;for i := 0; i < len(s); i ++ { if s[i] == k { is = true } };if ! is { /*;*/if k == "ready" {for key,sh := range ws.shList{ if key != "ready"&&key != "call" { sh.cmd.Start() } }};s = append(s, k);if len(s) == len(ws.shList)-1 { ws.shList["call"].cmd.Start() };t[ver][k] = *v };continue
         }
         if len(*v)-1-idx[k] < 0 { /*;*//*#for { if len(*v)-1-i >= 0{ break } }*/;continue }
         /*//---*/time.Sleep(time.Millisecond * 10)
         err := ws.wsConList[id].WriteMessage(1, []byte("{\""+k+"\":\""+(*v)[idx[k]]+"\"}")) //websocket message send
         if err != nil {
-            fmt.Println(err); delete(ws.wsConList, id); return
+          fmt.Println(err); delete(ws.wsConList, id); return
         }; idx[k] = idx[k] + 1
     }
     /**/
@@ -58,7 +58,9 @@ func (ws *wsEngine) run(cfg *appConfig) *wsEngine {
   //       rls[ver] = make(map[string][]string)
   if len(ws.rList) == 0 {
     if cfg.Ready != nil {
-      /*err := */ newSh(strings.Join(*cfg.Ready, ";")).cmd.Wait() //
+      ready := strings.Join(*cfg.Ready, ";")
+      sh := newSh(ready);ws.shList["ready"] = sh;sh.cmd.Start()
+      ws.rList["ready"] = &ws.shList["ready"].rst
     }
     for k, v := range cfg.Sh {
       //
@@ -90,14 +92,18 @@ func (ws *wsEngine) run(cfg *appConfig) *wsEngine {
       //
     }
     if cfg.Call != nil {
-      /*err := */ newSh(strings.Join(*cfg.Call, ";")).cmd.Wait() //
+      /////
+      /*;*/ws.shList["call"] = newSh(strings.Join(*cfg.Call, ";"))/*;*/
+      ws.rList["call"] = &ws.shList["call"].rst
     }
   }
       //
       } else {
   // if len(ws.rList) == 0 {
     for k, v := range rls[ver] {
-      ws.rList[k] = &v
+      t := v
+      // fmt.Println( &t )
+      ws.rList[k] = &t
     }
   // }
       }
