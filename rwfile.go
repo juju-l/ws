@@ -11,7 +11,7 @@ import (
  */
 func Write(file string, dat interface{}, /**/) {
   os.WriteFile(
-    "r.yml", append([]byte("\n"), Must(yaml.Marshal(dat)).([]byte)... /* , */), 0600,
+      "r.yml", append([]byte("\n"), Must(yaml.Marshal(dat)).([]byte)... /* , */), 0600,
     )
 }
 
