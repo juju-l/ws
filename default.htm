@@ -19,7 +19,7 @@
       class="c-main"
       style="">
       <!--<div class="pre" id="t1"></div>-->
-      <pre style="font-size:17px;line-height:132%;border-width:7px 21px 7px 21px;border-style:double solid double solid;border-color:#ff0000 #0000ff #ff0000 #0000ff;background-color:#000;color:#ffff;white-space:pre-wrap;word-wrap:break-word" id="consoleShow"></pre>
+      <div class="pre" style="font-size:17px;line-height:132%;border-width:7px 21px 7px 21px;border-style:double solid double solid;border-color:#ff0000 #0000ff #ff0000 #0000ff;background-color:#000;color:#ffff;white-space:pre-wrap;word-wrap:break-word" _="" id="consoleShow"></div>
       <!--<div class="pre" id="t2"></div>-->
       <style><!--
       body {
@@ -47,7 +47,7 @@
         width: calc(100% - 19%);
         height: 60%
       }
-      pre {
+      .pre {
         margin: 0px 1px;
         height: calc(100% - 14px);
         overflow-y: scroll
@@ -84,7 +84,13 @@
               xterm.loadAddon(fitAddon); /*xterm.loadAddon(attachAddon);*/ xterm.open( pre[i] )
           /* ; */ mapObject[pre[i].id] = { x: xterm,f: fitAddon/*,a: attachAddon*/ }; reSize( pre[i].id )
         }
-        let wss = new WebSocket("ws://"+self.location.host+"/?id={{.tstmp}}"); wss.onmessage = function(e) { let log = eval('('+e.data+')'); for (let key in mapObject) { if (log[key]==undefined) {continue};let textContent = log[key].match(/\n$/)!=null ? log[key] : log[key]+"\r\n";mapObject[key].x.write(textContent);/* ; *//*pre[key].scrollTop=pre[key].scrollHeight*/ }; /*console.log(log)*/ }; ///console.log(wss.readyState)
+        let wss = new WebSocket("ws://"+self.location.host+"/?id={{.tstmp}}")
+        wss.onmessage = function(e) {
+          let log = eval('('+e.data+')')
+          for (let key in mapObject) { if (log[key]==undefined) {continue};let textContent = log[key].match(/\n$/)!=null ? log[key] : log[key]+"\r\n";mapObject[key].x.write(textContent);/* ; *//*pre[key].scrollTop=pre[key].scrollHeight*/ }
+          /*console.log(log)*/
+        }
+        ///console.log(wss.readyState)
         // for (let i=0;i < pre.length;i ++) {
         //   $(".pre").eq(i).bind("resize", function(e) { console.log(e) })
         // }
