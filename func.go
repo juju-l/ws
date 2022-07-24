@@ -12,7 +12,7 @@ package main
 func Must(src interface{}, err error, /**/) interface{} {
   rst := src
   if err != nil {
-    panic(err)
+      panic(err)
   }
   return rst
 }

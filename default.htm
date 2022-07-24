@@ -19,16 +19,16 @@
       class="c-main"
       style="">
       <!--<div class="pre" id="t1"></div>-->
-      <div id="consoleShow" class="pre"></div>
+      <pre style="font-size:17px;line-height:132%;border-width:7px 21px 7px 21px;border-style:double solid double solid;border-color:#ff0000 #0000ff #ff0000 #0000ff;background-color:#000;color:#ffff;white-space:pre-wrap;word-wrap:break-word" id="consoleShow"></pre>
       <!--<div class="pre" id="t2"></div>-->
       <style><!--
       body {
         width: 100%;
         margin: 0 auto;
-        min-width: 1002px;
+        /* min-width: 1002px; */
         background-color: #ffffff;
         height: 100%;
-        min-height: 521px;
+        /* min-height: 521px; */
         padding: 0
       }
       /*scroll-custom-webkit {
@@ -43,14 +43,14 @@
         height: 47px
       }
       .c-main {
-        margin: 0px 47px;
-        width: calc(100% - 94px);
+        margin: 0px auto;
+        width: calc(100% - 19%);
         height: 60%
       }
-      .pre {
+      pre {
         margin: 0px 1px;
-        overflow: hidden;
-        height: 100%
+        height: calc(100% - 14px);
+        overflow-y: scroll
       }
       .c-fgx {
         margin: 3px auto;
@@ -60,8 +60,8 @@
       .c-footer {
         height: calc(17% - 7px - 6px)
       }
-      #consoleShow::-webkit-scrollbar-thumb {
-        display: none
+      #consoleShow::-webkit-scrollbar {
+        width: 0px
       }
       div {
         width: 100%;
