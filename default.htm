@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
   <header>
     <title>test webSocket</title>
@@ -12,20 +13,26 @@
     <div
       class="c-nav"
       style="">
+      <pre style="" id="ready"></pre>
       </div>
     <div
       class="c-main"
       style="">
+      <pre style="" id="t1"></pre>
       <pre style="font-size:17px;line-height:132%;border-width:7px 21px 7px 21px;border-style:double solid double solid;border-color:#ff0000 #0000ff #ff0000 #0000ff;background-color:#000;color:#ffff;white-space:pre-wrap;word-wrap:break-word" id="consoleShow"></pre>
+      <pre style="" id="t2"></pre>
       <style><!--
-      body {
+      * {
         width: 100%;
-        margin: 0 auto;
-        /* min-width: 1002px; */
-        background-color: #ffffff;
         height: 100%;
-        /* min-height: 521px; */
+        line-height: 100%;
+        margin: 0 auto;
         padding: 0
+      }
+      body {
+        /* min-width: 1002px;
+        background-color: #ffffff;
+        min-height: 521px; */
       }
       /*scroll-custom-webkit {
         -webkit-scrollbar: ; -webkit-scrollbar-button: ; -webkit-scrollbar-thumb: ; -webkit-scrollbar-track: ; -webkit-scrollbar-track-piece: ; -webkit-scrollbar-corner: ; -webkit-resizer: ;
@@ -43,11 +50,6 @@
         width: calc(100% - 19%);
         height: 60%
       }
-      pre {
-        margin: 0px 1px;
-        height: calc(100% - 14px);
-        overflow-y: scroll
-      }
       .c-fgx {
         margin: 3px auto;
         background-color: #ccc;
@@ -56,17 +58,20 @@
       .c-footer {
         height: calc(17% - 7px - 6px)
       }
-      #consoleShow::-webkit-scrollbar {
+      *::-webkit-scrollbar {
         width: 0px
       }
+      pre {
+        overflow-y: scroll;
+        width: calc(100% - 42px);
+        height: calc(100% - 14px);
+        white-space: pre-wrap;
+        word-wrap: break-word
+      }
       div {
-        width: 100%;
-        margin: 0;
         /* display: flex;
         justify-content: center;
         align-items: center; */
-        height: 100%;
-        padding: 0
       }
       --></style>
       <script>
@@ -84,6 +89,7 @@
     <div
       class="c-fgx"
       style="">
+      <pre style="" id="call"></pre>
       </div>
     <div
       class="c-footer"
