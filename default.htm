@@ -18,9 +18,9 @@
     <div
       class="c-main"
       style="">
-      <pre style="font-size:17px;line-height:132%;border-width:7px 21px 7px 21px;border-style:double solid double solid;border-color:#ff0000 #0000ff #ff0000 #0000ff;background-color:#000;color:#ffff" id="t1"></pre>
-      <pre style="font-size:17px;line-height:132%;border-width:7px 21px 7px 21px;border-style:double solid double solid;border-color:#ff0000 #0000ff #ff0000 #0000ff;background-color:#000;color:#ffff;white-space:pre-wrap;word-wrap:break-word" id="consoleShow"></pre>
-      <pre style="font-size:17px;line-height:132%;border-width:7px 21px 7px 21px;border-style:double solid double solid;border-color:#ff0000 #0000ff #ff0000 #0000ff;background-color:#000;color:#ffff" id="t2"></pre>
+      <pre style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;border-color:#ff0000 #0000ff;background-color:#000;color:#ffff;margin:0;width:calc(80% - 42px);left:0px;position:relative;top:calc(0px);z-index:+1" id="t1"></pre>
+      <pre style="font-size:17px;line-height:132%;border-width:7px 21px 7px 21px;border-style:double solid double solid;border-color:#ff0000 #0000ff #ff0000 #0000ff;background-color:#000;color:#ffff;white-space:pre-wrap;word-wrap:break-word;margin:0;width:calc(80% - 42px);left:80%;position:relative;top:calc(-100%);z-index:+3" id="consoleShow"></pre>
+      <pre style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;border-color:#ff0000 #0000ff;background-color:#000;color:#ffff;margin:0;width:calc(80% - 42px);left:90%;position:relative;top:calc(-200%);z-index:+5" id="t2"></pre>
       <style><!--
       * {
         width: 100%;
@@ -46,8 +46,8 @@
         height: 47px
       }
       .c-main {
-        margin: 0px auto;
-        width: calc(100% - 19%);
+        overflow: hidden;
+        width: calc(100% - 10%);
         height: 60%
       }
       .c-fgx {
@@ -61,26 +61,23 @@
       *::-webkit-scrollbar {
         width: 0px
       }
+      div {
+        /* display: flex;
+        justify-content: center;
+        align-items: center; */
+      }
       pre {
         overflow-y: scroll;
         width: calc(100% - 42px);
         height: calc(100% - 14px);
         white-space: pre-wrap;
         word-wrap: break-word;
-        position: relative
-      }
-      div {
-        /* display: flex;
-        justify-content: center;
-        align-items: center; */
       }
       --></style>
-      <script>
+      <script>$(document).ready(function(){
         pre = document.getElementsByTagName("pre")
         ///
-        $(".c-main pre").each((k,v) => {
-          $(v).css("width", "calc(81% - 42px)");$(v).css("margin", "0px "+($(".c-main").width()*0.19/($(".c-main pre").length-1)*($(".c-main pre").length-k))+"px 0px "+($(".c-main").width()*0.19/($(".c-main pre").length-1)*k)+"px");$(v).css("top", ""+(-1*$(".c-main").height()*k+0)+"px")
-        })
+        var spaceWid = 0.2*$(".c-main").width()/(pre.length-2-1);$(".c-main pre").each(function(i,o){ $(o).css("left",""+(i!=0?0.8*$(".c-main").width()+spaceWid*(i-1):0)+"px") });//console.log()
         ///
         var wss = new WebSocket("ws://"+self.location.host+"/?id={{.tstmp}}")
         wss.onmessage = function(e) {
@@ -88,12 +85,12 @@
         }
         ///console.log(wss.readyState)
         ///
-        $(".c-main pre").each((k,v) => {
-          $(v).bind("click", function(){ console.log(this) })
-        })
+        var curShow = 0;$(".c-main pre").each(function(i,o){
+          $(o).bind("click", function(){ console.log(spaceWid);if (i>curShow){for (c=curShow+1;c<=i;c= c+1){ $(".c-main pre").eq(c).animate({"left":""+(c*spaceWid)+"px"}) }}else{for (c=curShow;c>i;c= c-1){ $(".c-main pre").eq(c).animate({"left":""+(/*0.8**/$(".c-main").width()-(pre.length-2-c)*spaceWid)+"px"}) }};curShow = i })
+        });//console.log()
         ///
         ///obj.scrollTop = obj.scrollHeight
-      </script>
+      })</script>
     </div>
     <div
       class="c-fgx"
