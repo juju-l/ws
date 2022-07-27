@@ -55,6 +55,11 @@
         background-color: #cccccc;
         height: 47px
       }
+      .c-nav .pre {
+        height: 17px;
+        position: relative;
+        top: 15px
+      }
       .c-main {
         overflow: hidden;
         width: calc(100% - 10%);
@@ -63,10 +68,15 @@
       .c-fgx {
         margin: 3px auto;
         background-color: #ccc;
-        height: 7px
+        height: 19px
+      }
+      .c-fgx .pre {
+        height: 17px;
+        position: relative;
+        top: 1px
       }
       .c-footer {
-        height: calc(17% - 7px - 6px)
+        height: calc(17% - 19px - 6px)
       }
       *::-webkit-scrollbar {
         width: 0px
@@ -74,7 +84,7 @@
       div {
         /* display: flex;
         justify-content: center;
-        align-items: center; */
+        align-items: center */
       }
       .pre {
         overflow-y: scroll;
@@ -91,7 +101,7 @@
           let xterm = new Terminal({disableStdin:true,convertEol:true,overviewRulerWidth:0,scrollback:999,tabStopWidth:2}), /*attachAddon = new AttachAddon.AttachAddon(wss),*/ fitAddon = new FitAddon.FitAddon();xterm.loadAddon(fitAddon); /*xterm.loadAddon(attachAddon);*/ xterm.open( pre[i] );/* ; */ mapObject[pre[i].id] = { x: xterm,f: fitAddon/*,a: attachAddon*/ }; mapObject[pre[i].id].f.fit()
         };window.mapObject = mapObject
         let wss = new WebSocket("ws://"+self.location.host+"/?id={{.tstmp}}")
-        wss.onmessage = function(e) { let log = eval('('+e.data+')');for (let key in mapObject) { if (log[key]==undefined) {continue};let textContent = log[key].match(/\n$/)!=null ? log[key] : log[key]+"\n";mapObject[key].x.write(textContent);/* ; *//*pre[key].scrollTop=pre[key].scrollHeight*/ };/*console.log(log)*/ }
+        wss.onmessage = function(e) { let log = eval('('+e.data+')');for (let key in mapObject) { if (log[key]==undefined) {continue};let textContent = log[key].match(/\n$/)!=null ? log[key] : log[key] + (key==="ready"||key=="call" ? "" : "\n");mapObject[key].x.write(textContent);/* ; *//*pre[key].scrollTop=pre[key].scrollHeight*/ };/*console.log(log)*/ }
         ///obj.scrollTop = obj.scrollHeight
         var curShow = 0;$(".c-main .pre").each(function(i,o){
           $(o).bind("click", function(){ /**/;if (i>curShow){for (let c=curShow+1;c<=i;c= c+1){ $(".c-main .pre").eq(c).animate({"left":""+(c*spaceWid)+"px"}) }}else{for (let c=curShow;c>i;c= c-1){ $(".c-main .pre").eq(c).animate({"left":""+($(".c-main").width()-(pre.length-2-c)*spaceWid)+"px"}) }};curShow = i })
