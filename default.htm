@@ -18,9 +18,15 @@
     <div
       class="c-main"
       style="">
+      <!---->
       <pre style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;border-color:#ff0000 #0000ff;background-color:#000;color:#ffff;margin:0;width:calc(80% - 42px);left:0px;position:relative;top:calc(0px);z-index:+1" id="t1"></pre>
+      <!---->
+      <!---->
       <pre style="font-size:17px;line-height:132%;border-width:7px 21px 7px 21px;border-style:double solid double solid;border-color:#ff0000 #0000ff #ff0000 #0000ff;background-color:#000;color:#ffff;white-space:pre-wrap;word-wrap:break-word;margin:0;width:calc(80% - 42px);left:80%;position:relative;top:calc(-100%);z-index:+3" id="consoleShow"></pre>
+      <!---->
+      <!---->
       <pre style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;border-color:#ff0000 #0000ff;background-color:#000;color:#ffff;margin:0;width:calc(80% - 42px);left:90%;position:relative;top:calc(-200%);z-index:+5" id="t2"></pre>
+      <!---->
       <style><!--
       * {
         width: 100%;
@@ -45,6 +51,11 @@
         background-color: #cccccc;
         height: 47px
       }
+      .c-nav pre {
+        height: 47px;
+        line-height: 47px;
+        /**/
+      }
       .c-main {
         overflow: hidden;
         width: calc(100% - 10%);
@@ -53,10 +64,15 @@
       .c-fgx {
         margin: 3px auto;
         background-color: #ccc;
-        height: 7px
+        height: 19px
+      }
+      .c-fgx pre {
+        height: 17px;
+        line-height: 17px;
+        /**/
       }
       .c-footer {
-        height: calc(17% - 7px - 6px)
+        height: calc(17% - 19px - 6px)
       }
       *::-webkit-scrollbar {
         width: 0px
@@ -64,7 +80,7 @@
       div {
         /* display: flex;
         justify-content: center;
-        align-items: center; */
+        align-items: center */
       }
       pre {
         overflow-y: scroll;
@@ -81,12 +97,12 @@
         ///
         var wss = new WebSocket("ws://"+self.location.host+"/?id={{.tstmp}}")
         wss.onmessage = function(e) {
-          log = eval('('+e.data+')'); for (obj of pre) { if (log[obj.id]==undefined) {continue};obj.textContent += log[obj.id].match(/\n$/)!=null ? log[obj.id] : log[obj.id]+"\n";obj.scrollTop=obj.scrollHeight }; // console.log(log)
+          log = eval('('+e.data+')'); for (obj of pre) { if (log[obj.id]==undefined) {continue};obj.textContent = (obj.id=="ready"||obj.id=="call"?"":obj.textContent) + (log[obj.id].match(/\n$/)!=null ? log[obj.id] : log[obj.id]) + (obj.id=="ready"||obj.id=="call"?"":"\n");obj.scrollTop=obj.scrollHeight }; // console.log(log)
         }
         ///console.log(wss.readyState)
         ///
         var curShow = 0;$(".c-main pre").each(function(i,o){
-          $(o).bind("click", function(){ console.log(spaceWid);if (i>curShow){for (c=curShow+1;c<=i;c= c+1){ $(".c-main pre").eq(c).animate({"left":""+(c*spaceWid)+"px"}) }}else{for (c=curShow;c>i;c= c-1){ $(".c-main pre").eq(c).animate({"left":""+(/*0.8**/$(".c-main").width()-(pre.length-2-c)*spaceWid)+"px"}) }};curShow = i })
+          $(o).bind("click", function(){ /**/;if (i>curShow){for (c=curShow+1;c<=i;c= c+1){ $(".c-main pre").eq(c).animate({"left":""+(c*spaceWid)+"px"}) }}else{for (c=curShow;c>i;c= c-1){ $(".c-main pre").eq(c).animate({"left":""+(/*0.8**/$(".c-main").width()-(pre.length-2-c)*spaceWid)+"px"}) }};curShow = i })
         });//console.log()
         ///
         ///obj.scrollTop = obj.scrollHeight
