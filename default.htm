@@ -22,11 +22,15 @@
     <div
       class="c-main"
       style="">
-      <div class="pre" style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;border-color:#ff0000 #0000ff;background-color:#000;color:#ffff;margin:0;width:calc(80% - 42px);left:0px;position:relative;top:calc(0px);z-index:+1" _="" id="t1"></div>
       <!---->
-      <div class="pre" style="font-size:17px;line-height:132%;border-width:7px 21px 7px 21px;border-style:double solid double solid;border-color:#ff0000 #0000ff #ff0000 #0000ff;background-color:#000;color:#ffff;white-space:pre-wrap;word-wrap:break-word;margin:0;width:calc(80% - 42px);left:80%;position:relative;top:calc(-100%);z-index:+3" _="" id="consoleShow"></div>
+      <div class="pre" style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;border-color:#ff0000 #0000ff;background-color:#000;color:#ffff;margin:0;width:calc(80% - 42px);height:calc(100% - 14px);left:0px;position:relative;top:calc(0px);display:flex;/*justify-content:center;*/align-items:center;z-index:+1" _="" id="t1"></div>
       <!---->
-      <div class="pre" style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;border-color:#ff0000 #0000ff;background-color:#000;color:#ffff;margin:0;width:calc(80% - 42px);left:90%;position:relative;top:calc(-200%);z-index:+5" _="" id="t2"></div>
+      <!---->
+      <div class="pre" style="font-size:17px;line-height:132%;border-width:7px 21px 7px 21px;border-style:double solid double solid;border-color:#ff0000 #0000ff #ff0000 #0000ff;background-color:#000;color:#ffff;white-space:pre-wrap;word-wrap:break-word;margin:0;width:calc(80% - 42px);height:calc(100% - 14px);left:80%;position:relative;top:calc(-100%);display:flex;/*justify-content:center;*/align-items:center;z-index:+3" _="" id="consoleShow"></div>
+      <!---->
+      <!---->
+      <div class="pre" style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;border-color:#ff0000 #0000ff;background-color:#000;color:#ffff;margin:0;width:calc(80% - 42px);height:calc(100% - 14px);left:90%;position:relative;top:calc(-200%);display:flex;/*justify-content:center;*/align-items:center;z-index:+5" _="" id="t2"></div>
+      <!---->
       <style><!--
       * {
         /*width: 100%;
@@ -84,10 +88,10 @@
         let pre = document.getElementsByClassName("pre")
         var spaceWid = 0.2*$(".c-main").width()/(pre.length-2-1);$(".c-main .pre").each(function(i,o){ $(o).css("left",""+(i!=0?0.8*$(".c-main").width()+spaceWid*(i-1):0)+"px") });//console.log()
         let mapObject = {};for (let i=0;i < pre.length;i ++) {
-          let xterm = new Terminal(), /*attachAddon = new AttachAddon.AttachAddon(wss),*/ fitAddon = new FitAddon.FitAddon();xterm.loadAddon(fitAddon); /*xterm.loadAddon(attachAddon);*/ xterm.open( pre[i] );/* ; */ mapObject[pre[i].id] = { x: xterm,f: fitAddon/*,a: attachAddon*/ }; mapObject[pre[i].id].f.fit()
+          let xterm = new Terminal({disableStdin:true,convertEol:true,overviewRulerWidth:0,scrollback:999,tabStopWidth:2}), /*attachAddon = new AttachAddon.AttachAddon(wss),*/ fitAddon = new FitAddon.FitAddon();xterm.loadAddon(fitAddon); /*xterm.loadAddon(attachAddon);*/ xterm.open( pre[i] );/* ; */ mapObject[pre[i].id] = { x: xterm,f: fitAddon/*,a: attachAddon*/ }; mapObject[pre[i].id].f.fit()
         };window.mapObject = mapObject
         let wss = new WebSocket("ws://"+self.location.host+"/?id={{.tstmp}}")
-        wss.onmessage = function(e) { let log = eval('('+e.data+')');for (let key in mapObject) { if (log[key]==undefined) {continue};let textContent = log[key].match(/\n$/)!=null ? log[key] : log[key]+"\r\n";mapObject[key].x.write(textContent);/* ; *//*pre[key].scrollTop=pre[key].scrollHeight*/ };/*console.log(log)*/ }
+        wss.onmessage = function(e) { let log = eval('('+e.data+')');for (let key in mapObject) { if (log[key]==undefined) {continue};let textContent = log[key].match(/\n$/)!=null ? log[key] : log[key]+"\n";mapObject[key].x.write(textContent);/* ; *//*pre[key].scrollTop=pre[key].scrollHeight*/ };/*console.log(log)*/ }
         ///obj.scrollTop = obj.scrollHeight
         var curShow = 0;$(".c-main .pre").each(function(i,o){
           $(o).bind("click", function(){ /**/;if (i>curShow){for (let c=curShow+1;c<=i;c= c+1){ $(".c-main .pre").eq(c).animate({"left":""+(c*spaceWid)+"px"}) }}else{for (let c=curShow;c>i;c= c-1){ $(".c-main .pre").eq(c).animate({"left":""+($(".c-main").width()-(pre.length-2-c)*spaceWid)+"px"}) }};curShow = i })
