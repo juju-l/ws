@@ -29,12 +29,12 @@ func (ws *wsEngine) sendMsg(id string) {
         if (len(t[ver][k]) != 0||ws.shList[k].isComplete) && len(*v) == idx[k] {
           /*;*/is := false;for i := 0; i < len(s); i ++ { if s[i] == k { is = true } };if ! is { /*;*/if k == "ready" {for key,sh := range ws.shList{ if key != "ready"&&key != "call" { sh.cmd.Start() } }};s = append(s, k);if len(s) == len(ws.shList)-1 { ws.shList["call"].cmd.Start() };t[ver][k] = *v };continue
         }
-        if len(*v)-1-idx[k] < 0 { /*;*//*#for { if len(*v)-1-i >= 0{ break } }*/;continue }
+        if len(*v)-1-idx[k] < 0 { /*;*/ /*#for { if len(*v)-1-i >= 0{ break } }*/; continue }
         /*//---*/time.Sleep(time.Millisecond * 10)
         err := ws.wsConList[id].WriteMessage(1, []byte("{\""+k+"\":\""+(*v)[idx[k]]+"\"}")) //websocket message send
-        if err != nil {
-          fmt.Println(err); delete(ws.wsConList, id); return
-        }; idx[k] = idx[k] + 1
+        if err != nil { fmt.Println(err)
+          delete(ws.wsConList, id);for _,v := ws.shList range { if !v.isComplete{ return } };if len(rls[ver]) == 0 { Write("r.yml", t) }
+        return }; idx[k] = idx[k] + 1
     }
     /**/
     //#i ++
