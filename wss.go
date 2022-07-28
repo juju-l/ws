@@ -33,7 +33,7 @@ func (ws *wsEngine) sendMsg(id string) {
         /*//---*/time.Sleep(time.Millisecond * 10)
         err := ws.wsConList[id].WriteMessage(1, []byte("{\""+k+"\":\""+(*v)[idx[k]]+"\"}")) //websocket message send
         if err != nil { fmt.Println(err)
-          delete(ws.wsConList, id);for _,v := ws.shList range { if !v.isComplete{ return } };if len(rls[ver]) == 0 { Write("r.yml", t) }
+          delete(ws.wsConList, id);for _,v := range ws.shList { if !v.isComplete{ return } };if len(rls[ver]) == 0 { Write("r.yml", t) }
         return }; idx[k] = idx[k] + 1
     }
     /**/
