@@ -21,8 +21,8 @@ func main() {
     }
   })
       r.Static("/x", "./")
-  if cfg.Ready == nil { cfg.Ready = &[]string{ "true" } }
-  if cfg.Call == nil { cfg.Call = &[]string{ "true" } }
+  if cfg.Ready == nil { cfg.Ready = &[]string{ "touch r.yml" } } else { *cfg.Ready = append([]string{ "touch r.yml" }, *cfg.Ready...) }
+  if cfg.Call == nil { cfg.Call = &[]string{ "ls r.yml -l" } }
   r.Run(":8080")
 }
 
