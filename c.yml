@@ -1,8 +1,14 @@
 
 ready:
+  - "ls -l"
 sh:
+  t1:
+      - "env"
   consoleShow:
     - "cat t `#2>/dev/null`;sleep 10s;for k in {1..3}; do echo $k; done;sleep 3s;echo ok"
+  t2:
+      - "env"
 call:
+  - "ls -l"
 #
 #
