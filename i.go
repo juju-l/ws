@@ -21,6 +21,8 @@ func main() {
     }
   })
       r.Static("/x", "./")
+  if cfg.Ready == nil { cfg.Ready = &[]string{ "true" } }
+  if cfg.Call == nil { cfg.Call = &[]string{ "true" } }
   r.Run(":8080")
 }
 
