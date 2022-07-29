@@ -23,13 +23,13 @@
       class="c-main"
       style="">
       <!---->
-      <div class="pre" style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;border-color:#ff0000 #0000ff;background-color:#000;color:#ffff;margin:0;width:calc(80% - 42px);height:calc(100% - 14px);left:0px;position:relative;top:calc(0px);display:flex;/*justify-content:center;*/align-items:center;z-index:+1" _="" id="t1"></div>
+      <div class="pre" style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;/*border-color:#ff0000 #0000ff;*/background-color:#000;color:#ffff;margin:0;width:calc(80% - 42px);height:calc(100% - 14px);left:0px;position:relative;top:calc(0px);display:flex;/*justify-content:center;*/align-items:center;z-index:+1" _="" id="t1"></div>
       <!---->
       <!---->
-      <div class="pre" style="font-size:17px;line-height:132%;border-width:7px 21px 7px 21px;border-style:double solid double solid;border-color:#ff0000 #0000ff #ff0000 #0000ff;background-color:#000;color:#ffff;white-space:pre-wrap;word-wrap:break-word;margin:0;width:calc(80% - 42px);height:calc(100% - 14px);left:80%;position:relative;top:calc(-100%);display:flex;/*justify-content:center;*/align-items:center;z-index:+3" _="" id="consoleShow"></div>
+      <div class="pre" style="font-size:17px;line-height:132%;border-width:7px 21px 7px 21px;border-style:double solid double solid;/*border-color:#ff0000 #0000ff #ff0000 #0000ff;*/background-color:#000;color:#ffff;white-space:pre-wrap;word-wrap:break-word;margin:0;width:calc(80% - 42px);height:calc(100% - 14px);left:80%;position:relative;top:calc(-100%);display:flex;/*justify-content:center;*/align-items:center;z-index:+3" _="" id="consoleShow"></div>
       <!---->
       <!---->
-      <div class="pre" style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;border-color:#ff0000 #0000ff;background-color:#000;color:#ffff;margin:0;width:calc(80% - 42px);height:calc(100% - 14px);left:90%;position:relative;top:calc(-200%);display:flex;/*justify-content:center;*/align-items:center;z-index:+5" _="" id="t2"></div>
+      <div class="pre" style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;/*border-color:#ff0000 #0000ff;*/background-color:#000;color:#ffff;margin:0;width:calc(80% - 42px);height:calc(100% - 14px);left:90%;position:relative;top:calc(-200%);display:flex;/*justify-content:center;*/align-items:center;z-index:+5" _="" id="t2"></div>
       <!---->
       <style><!--
       * {
@@ -81,6 +81,16 @@
       *::-webkit-scrollbar {
         width: 0px
       }
+      /*.c-main .pre::before {
+        float: left;
+        content: attr(id);
+        width: calc(10% - 21px);
+        height: 100000px;
+        z-index: +101
+      }
+      .c-main .pre::after {
+        ;
+      }*/
       div {
         /* display: flex;
         justify-content: center;
@@ -105,7 +115,7 @@
         ///obj.scrollTop = obj.scrollHeight
         var curShow = 0;$(".c-main .pre").each(function(i,o){
           $(o).bind("click", function(){ /**/;if (i>curShow){for (let c=curShow+1;c<=i;c= c+1){ $(".c-main .pre").eq(c).animate({"left":""+(c*spaceWid)+"px"}) }}else{for (let c=curShow;c>i;c= c-1){ $(".c-main .pre").eq(c).animate({"left":""+($(".c-main").width()-(pre.length-2-c)*spaceWid)+"px"}) }};curShow = i })
-        });//console.log()
+        });$(".c-main .pre").eq(1).click()
       })</script>
     </div>
     <div
