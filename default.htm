@@ -19,13 +19,13 @@
       class="c-main"
       style="">
       <!---->
-      <pre style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;border-color:#ff0000 #0000ff;background-color:#000;color:#ffff;margin:0;width:calc(80% - 42px);left:0px;position:relative;top:calc(0px);z-index:+1" id="t1"></pre>
+      <pre style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;/*border-color:#ff0000 #0000ff;*/background-color:#000;color:#ffff;margin:0;width:calc(80% - 42px);left:0px;position:relative;top:calc(0px);z-index:+1" id="t1"></pre>
       <!---->
       <!---->
-      <pre style="font-size:17px;line-height:132%;border-width:7px 21px 7px 21px;border-style:double solid double solid;border-color:#ff0000 #0000ff #ff0000 #0000ff;background-color:#000;color:#ffff;white-space:pre-wrap;word-wrap:break-word;margin:0;width:calc(80% - 42px);left:80%;position:relative;top:calc(-100%);z-index:+3" id="consoleShow"></pre>
+      <pre style="font-size:17px;line-height:132%;border-width:7px 21px 7px 21px;border-style:double solid double solid;/*border-color:#ff0000 #0000ff #ff0000 #0000ff;*/background-color:#000;color:#ffff;white-space:pre-wrap;word-wrap:break-word;margin:0;width:calc(80% - 42px);left:80%;position:relative;top:calc(-100%);z-index:+3" id="consoleShow"></pre>
       <!---->
       <!---->
-      <pre style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;border-color:#ff0000 #0000ff;background-color:#000;color:#ffff;margin:0;width:calc(80% - 42px);left:90%;position:relative;top:calc(-200%);z-index:+5" id="t2"></pre>
+      <pre style="font-size:17px;line-height:132%;border-width:7px 21px;border-style:double solid;/*border-color:#ff0000 #0000ff;*/background-color:#000;color:#ffff;margin:0;width:calc(80% - 42px);left:90%;position:relative;top:calc(-200%);z-index:+5" id="t2"></pre>
       <!---->
       <style><!--
       * {
@@ -77,6 +77,16 @@
       *::-webkit-scrollbar {
         width: 0px
       }
+      .c-main pre::before {
+        float: left;
+        content: attr(id);
+        width: calc(10% - 21px);
+        height: 100000px;
+        z-index: +101
+      }
+      .c-main pre::after {
+        ;
+      }
       div {
         /* display: flex;
         justify-content: center;
@@ -103,7 +113,7 @@
         ///
         var curShow = 0;$(".c-main pre").each(function(i,o){
           $(o).bind("click", function(){ /**/;if (i>curShow){for (c=curShow+1;c<=i;c= c+1){ $(".c-main pre").eq(c).animate({"left":""+(c*spaceWid)+"px"}) }}else{for (c=curShow;c>i;c= c-1){ $(".c-main pre").eq(c).animate({"left":""+(/*0.8**/$(".c-main").width()-(pre.length-2-c)*spaceWid)+"px"}) }};curShow = i })
-        });//console.log()
+        });$(".c-main pre").eq(1).click()
         ///
         ///obj.scrollTop = obj.scrollHeight
       })</script>
