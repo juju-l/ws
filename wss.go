@@ -17,23 +17,23 @@ type wsEngine struct {
 func (ws *wsEngine) sendMsg(id string) {
   /*#i := 0;*/idx:=make(map[string]int);s:=[]string{}
   ver := time.Now().Format("v010206r")
-  /*;*/rls := *Yml[map[string]map[string][]string]("r.yml");t:=rls
+  /*;*/rls := *Yml[map[string]map[string][]string]("r.yml");//t:=rls
     if rls[ver] == nil {
-      /*;*/if rls==nil{t = make(map[string]map[string][]string)};t[ver]=make(map[string][]string)
+      /*;*/if rls==nil{/*t*/rls = make(map[string]map[string][]string)};/*t*/rls[ver]=make(map[string][]string)
     }
   for {
     if len(s) == len(ws.rList) {
-      delete(ws.wsConList, id); /*if len(rls[ver])==0 {*/ Write("r.yml", t) /*}*/; break
+      delete(ws.wsConList, id); /*if len(rls[ver])==0 {*/ Write("r.yml", /*t*/rls) /*}*/; break
     }
     for k, v := range ws.rList {
-        if (t[ver][k] != nil||ws.shList[k].isComplete) && len(*v) == idx[k] {
-          /*;*/is := false;for i := 0; i < len(s); i ++ { if s[i] == k { is = true } };if ! is { /*;*/if k == "ready" {for key,sh := range ws.shList{ if key != "ready"&&key != "call" { sh.cmd.Start() } }};s = append(s, k);if len(s) == len(ws.shList)-1 { ws.shList["call"].cmd.Start() };t[ver][k] = *v };continue
+        if (/*t*/rls[ver][k] != nil||ws.shList[k].isComplete) && len(*v) == idx[k] {
+          /*;*/is := false;for i := 0; i < len(s); i ++ { if s[i] == k { is = true } };if ! is { /*;*/if k == "ready" {for key,sh := range ws.shList{ if key != "ready"&&key != "call" { sh.cmd.Start() } }};s = append(s, k);if len(s) == len(ws.shList)-1 { ws.shList["call"].cmd.Start() };/*t*/rls[ver][k] = *v };continue
         }
         if len(*v)-1-idx[k] < 0 { /*;*/ /*#for { if len(*v)-1-i >= 0{ break } }*/; continue }
         /*//---*/time.Sleep(time.Millisecond * 10)
         err := ws.wsConList[id].WriteMessage(1, []byte("{\""+k+"\":\""+(*v)[idx[k]]+"\"}")) //websocket message send
         if err != nil { fmt.Println(err)
-          delete(ws.wsConList, id);for _,v := range ws.shList { if !v.isComplete{ return } };/*if len(rls[ver]) == 0 {*/ Write("r.yml", t) /*}*/
+          delete(ws.wsConList, id);for _,v := range ws.shList { if !v.isComplete{ return } };/*if len(rls[ver]) == 0 {*/ Write("r.yml", /*t*/rls) /*}*/
         return }; idx[k] = idx[k] + 1
     }
     /**/
